@@ -29,7 +29,7 @@ const SITE = {
   // Google Form teachers use to request assessment access (educator verification)
   requestAccessUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeH6-ztUDcCPv-L0WrEyC3tJV9UcUuE9ZkWNgjHJKOaVggBxw/viewform",
   // Contact email shown on the site
-  email: "chemlessons.xyz@gmail.com",
+  email: "hello@chemlessons.xyz",
   // Companion site
   companionSite: "https://docmayscience.com",
 };
