@@ -23,6 +23,7 @@ js/main.js          Shared behavior: nav, animations, hero canvas, FA fallback
 js/curriculum.js    Curriculum page renderer + search/filter
 slides/demo-deck/   Self-contained HTML slide deck (copy it to make new decks)
 assets/             Logo files + favicon
+scripts/            Apps Script that builds the educator-access Google Form (not part of the site)
 CNAME               Custom domain for GitHub Pages
 ```
 
