@@ -108,7 +108,14 @@ function setTrack(id) {
   // educator-access links from data.js (fall back to assessments page info)
   if (typeof SITE !== "undefined") {
     document.querySelectorAll("[data-request-access]").forEach((el) => {
-      el.href = SITE.requestAccessUrl || "assessments.html#request";
+      if (SITE.requestAccessUrl) {
+        // External Google Form — open in a new tab so the site stays put
+        el.href = SITE.requestAccessUrl;
+        el.target = "_blank";
+        el.rel = "noopener noreferrer";
+      } else {
+        el.href = "assessments.html#request";
+      }
     });
     document.querySelectorAll("[data-site-email]").forEach((el) => {
       el.href = `mailto:${SITE.email}`;
