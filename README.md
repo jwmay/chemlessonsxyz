@@ -118,34 +118,41 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Deploying to GitHub Pages
+## Development workflow
 
-1. Create a repo (e.g. `chemlessons`) and push this folder:
-   ```sh
-   git init && git add -A && git commit -m "Initial site"
-   git branch -M main
-   git remote add origin git@github.com:YOUR_USERNAME/chemlessons.git
-   git push -u origin main
-   ```
-2. Repo → **Settings → Pages** → Source: *Deploy from a branch* → `main` / `/ (root)`.
-3. The `CNAME` file already sets the custom domain to `chemlessons.xyz`; after DNS
-   is set up (below), check **Enforce HTTPS** on the same settings page.
+Two branches: **`dev`** (working) and **`main`** (production — auto-deploys).
+Never commit directly to `main`.
 
-## Pointing chemlessons.xyz at GitHub Pages
+```sh
+npm install        # one-time: dev tooling (html-validate, linkinator, live-server)
+npm run dev        # local live-reload server at http://localhost:5500
+npm run check      # html-validate + internal link check (what CI runs on PRs)
+npm run release    # open a PR from dev → main
+```
 
-At your DNS provider, create:
+To ship a change: work on `dev`, run `npm run check`, then `npm run release`
+(or the `/ship` slash command) to open the PR. Once CI is green and the PR
+merges, `main` auto-deploys. Other slash commands: `/wip` (checkpoint dev),
+`/sitrep` (status report), `/add-deck` (scaffold a new HTML slide deck).
 
-| Type  | Host | Value               |
-| ----- | ---- | ------------------- |
-| A     | `@`  | `185.199.108.153`   |
-| A     | `@`  | `185.199.109.153`   |
-| A     | `@`  | `185.199.110.153`   |
-| A     | `@`  | `185.199.111.153`   |
-| CNAME | `www`| `YOUR_USERNAME.github.io` |
+## Hosting & deployment
 
-(Optionally add AAAA records `2606:50c0:8000::153` through `2606:50c0:8003::153`
-for IPv6.) DNS changes can take up to a few hours; then enable **Enforce HTTPS**
-in the Pages settings. This is the same setup as docmayscience.com.
+Static site on **GitHub Pages**, published by GitHub Actions
+(`.github/workflows/deploy.yml`) on every push to `main`;
+`.github/workflows/ci.yml` runs the lint + link checks on pull requests. The
+custom domain comes from the `CNAME` file (`chemlessons.xyz`), with **Enforce
+HTTPS** on.
+
+DNS is managed at WordPress.com (the domain's nameservers) and points the apex
+at GitHub Pages, mirroring docmayscience.com:
+
+| Type  | Host  | Value                                              |
+| ----- | ----- | -------------------------------------------------- |
+| A     | `@`   | `185.199.108.153`–`185.199.111.153` (4 records)    |
+| AAAA  | `@`   | `2606:50c0:8000::153`–`2606:50c0:8003::153` (4 records) |
+| CNAME | `www` | `jwmay.github.io`                                  |
+
+The Google MX (email) records are left untouched.
 
 ## License
 
