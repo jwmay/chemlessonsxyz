@@ -34,23 +34,23 @@ Deployed to **chemlessons.xyz** via GitHub Pages (GitHub Actions).
 
 ## Icons — Font Awesome Pro kit (read before adding any icon)
 
-Every page's `<head>` loads a Font Awesome **Pro kit**:
+Every page's `<head>` loads a Font Awesome **Pro kit** (kit `83c74fddfb`, with
+the **Classic Solid** and **Duotone Solid** styles enabled):
 
 ```html
-<script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/83c74fddfb.js" crossorigin="anonymous"></script>
 ```
 
-- The kit code is still the `YOUR_KIT_CODE` placeholder, so **right now every
-  icon shows an emoji fallback**: `js/main.js` puts `.no-fa` on `<html>` and
-  each `<i>`'s `data-fb="…"` emoji renders via CSS. Nothing looks broken
-  without the kit — this is expected until a real kit code is filled in across
-  all six HTML files.
-- Icons in the markup use duotone, e.g. `fa-duotone fa-solid fa-flask` (or a
-  plain `fa-solid …`). When adding one, always give it a `data-fb` emoji
-  fallback and `aria-hidden="true"`, matching the neighbouring markup and the
-  `iconHTML()` helper in `js/main.js`.
-- The kit must have **Pro + duotone** enabled and list `chemlessons.xyz` and
-  `localhost` as authorized domains.
+- Use only those two styles: `fa-solid …` (e.g. the nav toggle, search) and
+  `fa-duotone fa-solid …` (e.g. `fa-flask`, `fa-notebook`). Other weights
+  (regular/light/thin) and Sharp aren't in the kit and would render as blank
+  boxes.
+- When adding an icon, always give it a `data-fb` emoji fallback and
+  `aria-hidden="true"`, matching the neighbouring markup and the `iconHTML()`
+  helper in `js/main.js`. If the kit ever fails to load, those emoji show via
+  the `.no-fa` class — so nothing looks broken.
+- The kit's authorized domains must include `chemlessons.xyz`,
+  `www.chemlessons.xyz`, and `localhost`.
 
 ## Verifying a rendered change
 

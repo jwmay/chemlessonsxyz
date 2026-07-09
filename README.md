@@ -97,19 +97,18 @@ Every "Request educator access" button across the site points there automaticall
 
 ## Font Awesome Pro
 
-Each HTML page's `<head>` has:
+Each HTML page's `<head>` loads a Font Awesome **Pro kit** (kit `83c74fddfb`,
+with the **Classic → Solid** and **Duotone → Solid** styles enabled):
 
 ```html
-<script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/83c74fddfb.js" crossorigin="anonymous"></script>
 ```
 
-1. Create/open a Kit at fontawesome.com → Kits (enable Pro + duotone icons).
-2. Add `chemlessons.xyz` (and `localhost` for testing) to the kit's allowed domains.
-3. Replace `YOUR_KIT_CODE` in all six HTML files:
-   `grep -rl YOUR_KIT_CODE . | xargs sed -i '' 's/YOUR_KIT_CODE/abc123def4/g'`
-
-Until the kit is configured, the site automatically falls back to emoji icons
-(via the `no-fa` class in `js/main.js`), so nothing looks broken.
+Icons use `fa-solid …` (e.g. the nav toggle, search) and `fa-duotone fa-solid …`
+(e.g. `fa-flask`, `fa-notebook`), so **both** of those kit styles must stay
+enabled, and `chemlessons.xyz`, `www.chemlessons.xyz`, and `localhost` must be in
+the kit's authorized domains. If the kit ever fails to load, `js/main.js` falls
+back to each icon's `data-fb` emoji (via the `no-fa` class), so nothing breaks.
 
 ## Local preview
 
