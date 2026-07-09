@@ -1,0 +1,55 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev server (live reload)",
+      "type": "shell",
+      "command": "npm run dev:quiet",
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check (lint + links)",
+      "type": "shell",
+      "command": "npm run check",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Release: open PR (dev → main)",
+      "type": "shell",
+      "command": "npm run release",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Sync branches (after PR merge)",
+      "type": "shell",
+      "command": "npm run sync",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

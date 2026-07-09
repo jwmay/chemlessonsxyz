@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Deck — chemlessons.xyz</title>
+  <meta name="description" content="A dependency-free HTML slide deck template for chemlessons.xyz lessons.">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <meta name="theme-color" content="#1d3a5c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       chemlessons.xyz HTML slide deck template
+       To make a new deck: copy this folder, edit the <section>
+       slides below, update the <title>. That's it — everything is
+       in this one file.
+       ============================================================ */
+    :root {
+      --blue: #3f6ea6;
+      --blue-dark: #2e5480;
+      --blue-deep: #1d3a5c;
+      --blue-100: #e9eef5;
+      --orange: #dd974e;
+      --orange-dark: #b97a2e;
+      --ink: #22344a;
+      --serif: "Lora", Georgia, serif;
+      --hand: "Caveat", cursive;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: var(--blue-deep);
+      font-family: var(--sans);
+      color: var(--ink);
+    }
+
+    .deck { position: relative; width: 100%; height: 100%; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 6vw, 5rem) clamp(2rem, 8vw, 7rem);
+      background: #fbfcfe;
+      opacity: 0;
+      transform: translateX(4%);
+      visibility: hidden;
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s linear 0.45s;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+
+    .slide.prev { transform: translateX(-4%); }
+
+    /* slide flavors */
+    .slide.title-slide, .slide.closing-slide {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark) 60%, var(--blue));
+      color: #fff;
+      align-items: flex-start;
+    }
+    .title-slide h1, .closing-slide h1 { color: #fff; }
+    .title-slide .kicker, .closing-slide .kicker { color: var(--orange); }
+    .title-slide p, .closing-slide p { color: var(--blue-100); }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 700;
+      color: var(--blue-deep);
+      line-height: 1.12;
+      margin: 0 0 0.4em;
+      max-width: 22ch;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 4.5vw, 3rem);
+      color: var(--blue-deep);
+      margin: 0 0 0.7em;
+      max-width: 24ch;
+    }
+
+    .kicker {
+      font-family: var(--hand);
+      font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+      color: var(--orange-dark);
+      display: block;
+      margin-bottom: 0.4rem;
+      transform: rotate(-1.5deg);
+    }
+
+    p, li {
+      font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    ul { padding-left: 1.2em; }
+    li { margin-bottom: 0.5em; }
+    li::marker { color: var(--orange); }
+
+    strong { color: var(--blue-dark); }
+    .title-slide strong, .closing-slide strong { color: var(--orange); }
+
+    kbd {
+      font-family: var(--sans);
+      font-size: 0.85em;
+      background: var(--blue-100);
+      color: var(--blue-deep);
+      border: 1px solid #c9d6e6;
+      border-bottom-width: 3px;
+      border-radius: 7px;
+      padding: 0.1em 0.55em;
+      font-weight: 700;
+    }
+
+    .cols { display: flex; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: flex-start; }
+    .cols > div { flex: 1; }
+
+    .statement {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      color: var(--blue-deep);
+      line-height: 1.3;
+      max-width: 26ch;
+      margin: 0;
+    }
+    .statement .hand { font-family: var(--hand); color: var(--orange-dark); }
+
+    .formula {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      background: var(--blue-100);
+      border-left: 6px solid var(--orange);
+      border-radius: 12px;
+      padding: 0.6em 1em;
+      display: inline-block;
+      color: var(--blue-deep);
+      margin: 0.5em 0;
+    }
+    .formula sub { font-size: 0.6em; }
+
+    /* footer & chrome */
+    .slide-footer {
+      position: absolute;
+      bottom: 1.1rem;
+      left: clamp(2rem, 8vw, 7rem);
+      right: clamp(2rem, 8vw, 7rem);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #96a0ad;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .title-slide .slide-footer, .closing-slide .slide-footer { color: rgba(233,238,245,0.55); }
+
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), var(--blue));
+      width: 0;
+      z-index: 10;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .counter {
+      position: fixed;
+      bottom: 1rem;
+      right: 1.2rem;
+      z-index: 10;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(29, 58, 92, 0.75);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .nav-hint {
+      position: fixed;
+      bottom: 1rem;
+      left: 1.2rem;
+      z-index: 10;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      background: rgba(29, 58, 92, 0.75);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      opacity: 1;
+      transition: opacity 1s;
+      pointer-events: none;
+    }
+    .nav-hint.faded { opacity: 0; }
+
+    .brand-corner {
+      position: fixed;
+      top: 0.9rem;
+      right: 1.2rem;
+      z-index: 10;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--blue);
+      text-decoration: none;
+      background: rgba(255,255,255,0.85);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+    }
+    .brand-corner .xyz { font-family: var(--hand); color: var(--orange-dark); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slide, .progress { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" role="presentation"></div>
+  <a class="brand-corner" href="../../slides.html" title="Back to chemlessons.xyz">chemlessons<span class="xyz">.xyz</span></a>
+
+  <div class="deck">
+
+    <!-- Slide 1 -->
+    <section class="slide title-slide">
+      <span class="kicker">chemlessons.xyz presents</span>
+      <h1>The HTML Slide Deck Template</h1>
+      <p>A fast, dependency-free way to present chemistry lessons in any browser.
+         Press <strong>→</strong> or click anywhere to begin.</p>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="slide">
+      <span class="kicker">first things first</span>
+      <h2>How to navigate</h2>
+      <ul>
+        <li><kbd>→</kbd> <kbd>Space</kbd> <kbd>PgDn</kbd> — next slide</li>
+        <li><kbd>←</kbd> <kbd>PgUp</kbd> — previous slide</li>
+        <li><kbd>Home</kbd> / <kbd>End</kbd> — first / last slide</li>
+        <li><kbd>F</kbd> — toggle fullscreen</li>
+        <li><strong>Click</strong> the right/left half of the screen, or <strong>swipe</strong> on touch devices</li>
+      </ul>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="slide">
+      <span class="kicker">a standard content slide</span>
+      <h2>Bullets, but make them readable</h2>
+      <ul>
+        <li>Big type sized with <strong>clamp()</strong>, so it scales from a Chromebook to a projector</li>
+        <li>One idea per bullet — the details live in your teacher talk</li>
+        <li><strong>Bold</strong> pulls the eye to vocabulary worth writing down</li>
+      </ul>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="slide">
+      <span class="kicker">two columns when you need them</span>
+      <h2>Compare and contrast</h2>
+      <div class="cols">
+        <div>
+          <p><strong>Physical change</strong></p>
+          <ul>
+            <li>Same substance before and after</li>
+            <li>Often reversible</li>
+            <li>Tearing, melting, dissolving</li>
+          </ul>
+        </div>
+        <div>
+          <p><strong>Chemical change</strong></p>
+          <ul>
+            <li>New substance is formed</li>
+            <li>Usually hard to reverse</li>
+            <li>Burning, rusting, reacting</li>
+          </ul>
+        </div>
+      </div>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 5 -->
+    <section class="slide">
+      <span class="kicker">formulas get the spotlight</span>
+      <h2>Density</h2>
+      <div class="formula">D = m / V</div>
+      <p>Units matter: report mass in <strong>grams</strong> and volume in
+         <strong>mL</strong> or <strong>cm³</strong>, and density takes care of itself.</p>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section class="slide">
+      <p class="statement">
+        Big statement slides give one idea room to breathe —
+        <span class="hand">use them for the takeaway.</span>
+      </p>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- Slide 7 -->
+    <section class="slide closing-slide">
+      <span class="kicker">make it yours</span>
+      <h1>Build your own deck</h1>
+      <p>Duplicate the <strong>slides/demo-deck</strong> folder, edit the
+         <strong>&lt;section&gt;</strong> elements in index.html, and add it to the deck list
+         in <strong>js/data.js</strong>. One file, no build step, no dependencies.</p>
+      <div class="slide-footer"><span>Demo Deck</span><span>chemlessons.xyz</span></div>
+    </section>
+
+  </div>
+
+  <div class="counter" aria-live="polite">1 / 7</div>
+  <div class="nav-hint">→ / click / swipe to advance</div>
+
+  <script>
+    (function () {
+      const slides = [...document.querySelectorAll(".slide")];
+      const progress = document.querySelector(".progress");
+      const counter = document.querySelector(".counter");
+      const hint = document.querySelector(".nav-hint");
+      let current = 0;
+
+      function show(index) {
+        index = Math.max(0, Math.min(index, slides.length - 1));
+        slides.forEach((s, i) => {
+          s.classList.toggle("active", i === index);
+          s.classList.toggle("prev", i < index);
+        });
+        current = index;
+        progress.style.width = ((index + 1) / slides.length) * 100 + "%";
+        counter.textContent = (index + 1) + " / " + slides.length;
+        history.replaceState(null, "", "#" + (index + 1));
+      }
+
+      function next() { show(current + 1); fadeHint(); }
+      function prev() { show(current - 1); fadeHint(); }
+
+      let hintFaded = false;
+      function fadeHint() {
+        if (!hintFaded) { hint.classList.add("faded"); hintFaded = true; }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); next(); }
+        else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+        else if (e.key === "Home") { e.preventDefault(); show(0); }
+        else if (e.key === "End") { e.preventDefault(); show(slides.length - 1); }
+        else if (e.key.toLowerCase() === "f") {
+          document.fullscreenElement
+            ? document.exitFullscreen()
+            : document.documentElement.requestFullscreen().catch(() => {});
+        }
+      });
+
+      // click: right half = next, left half = previous (links still work)
+      document.addEventListener("click", (e) => {
+        if (e.target.closest("a")) return;
+        e.clientX > window.innerWidth / 2 ? next() : prev();
+      });
+
+      // swipe
+      let touchX = null;
+      document.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+      document.addEventListener("touchend", (e) => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 45) dx < 0 ? next() : prev();
+        touchX = null;
+      }, { passive: true });
+
+      // deep link: #3 opens slide 3
+      const fromHash = parseInt(location.hash.slice(1), 10);
+      show(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+    })();
+  </script>
+</body>
+</html>

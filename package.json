@@ -1,0 +1,21 @@
+{
+  "name": "chemlessonsxyz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "chemlessons.xyz — chemistry lessons, slides, and assessments by Joseph May",
+  "scripts": {
+    "dev": "live-server --host=localhost --port=5500",
+    "dev:quiet": "live-server --host=localhost --port=5500 --no-browser",
+    "ngrok": "ngrok http 5500",
+    "lint": "html-validate *.html slides/*/*.html",
+    "links": "linkinator . --recurse --skip \"^https?://(?!localhost)\"",
+    "check": "npm run lint && npm run links",
+    "sync": "git checkout main && git pull && git checkout dev && git merge main && git push",
+    "release": "gh pr create --base main --head dev --fill"
+  },
+  "devDependencies": {
+    "html-validate": "^11.5.5",
+    "linkinator": "^7.6.1",
+    "live-server": "^1.2.2"
+  }
+}
