@@ -1300,6 +1300,38 @@ a:hover { color: var(--blue-dark); }
 }
 
 /* ==========================================================================
+   Layout tweaks — small overrides moved out of inline style= attributes
+   (keeps markup lint-clean under html-validate's no-inline-style rule)
+   ========================================================================== */
+
+/* Section with reduced top padding (sits directly under a .page-head) */
+.section.section--tight { padding-top: 1.5rem; }
+.section.section--snug  { padding-top: 2rem; }
+
+/* Kicker rendered in the accent color (homepage educator-access CTA) */
+.section-kicker.kicker-accent { color: var(--orange); }
+
+/* Assessments — request-form CTA block + helper note beneath it */
+.request-cta { margin-top: 2.5rem; }
+.form-note {
+  margin-top: 0.8rem;
+  color: var(--gray);
+  font-size: 0.92rem;
+}
+
+/* Assessments — FAQ list spacing under its heading */
+.faq.faq--spaced { margin-top: 1.5rem; }
+
+/* Curriculum — no-JS fallback message spacing */
+.noscript-note { padding: 2rem 0; }
+
+/* 404 — tighter, centered variant of the standard hero pieces */
+.page-404 .section-kicker { font-size: 1.8rem; }
+.page-404 h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+.page-404 .section-intro { margin-inline: auto; }
+.page-404 .hero-actions { justify-content: center; margin-top: 1.5rem; }
+
+/* ==========================================================================
    Motion preferences
    ========================================================================== */
 
