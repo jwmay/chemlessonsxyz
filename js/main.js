@@ -121,6 +121,12 @@ function setTrack(id) {
       el.href = `mailto:${SITE.email}`;
       if (!el.textContent.trim()) el.textContent = SITE.email;
     });
+    document.querySelectorAll("[data-chem-cash]").forEach((el) => {
+      // External app — open in a new tab so the site stays put
+      el.href = SITE.chemCashUrl;
+      el.target = "_blank";
+      el.rel = "noopener noreferrer";
+    });
   }
 
   // course track switcher (homepage + curriculum page)

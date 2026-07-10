@@ -32,6 +32,8 @@ const SITE = {
   email: "hello@chemlessons.xyz",
   // Companion site
   companionSite: "https://docmayscience.com",
+  // Chem Cash — classroom economy app (marketing page; the root URL is the sign-in)
+  chemCashUrl: "https://chem.cash/about?ref=chemlessons",
 };
 
 /* Resource type → icon + color + label (Font Awesome Pro classes, emoji fallback) */
