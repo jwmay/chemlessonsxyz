@@ -224,7 +224,7 @@ const TRACKS = [
         description:
           "Make sense of counting by mass — what a mole is, why chemists need it, and recipe-style stoichiometry.",
         topics: ["Counting by mass", "The mole (conceptual)", "Molar mass", "Recipe stoichiometry"],
-        game: { title: "Key Smash", slug: "key-smash" },
+        game: { title: "Chemia", slug: "chemia" },
         resources: [
           { title: "Mole Concept Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Counting by Mass Slides", kind: "slides", type: "gslides", url: "" },
@@ -243,7 +243,7 @@ const TRACKS = [
         description:
           "Explore water's special properties and what really happens, particle by particle, when things dissolve.",
         topics: ["Properties of water", "Dissolving (particle view)", "Concentration (qualitative)", "Solubility"],
-        game: { title: "Chemia", slug: "chemia" },
+        game: { title: "Key Smash", slug: "key-smash" },
         resources: [
           { title: "Solutions & Water Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Dissolving & Solutions Slides", kind: "slides", type: "gslides", url: "" },
@@ -464,7 +464,7 @@ const TRACKS = [
         description:
           "Model gas behavior quantitatively: the gas laws, ideal gas equation, partial pressures, and gas stoichiometry.",
         topics: ["Kinetic molecular theory", "Gas laws", "Ideal gas law", "Dalton's law", "Graham's law", "Gas stoichiometry"],
-        game: { title: "Qz", slug: "quiz" },
+        game: { title: "Chemia", slug: "chemia" },
         resources: [
           { title: "Gas Laws Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Ideal Gas & Partial Pressure Slides", kind: "slides", type: "gslides", url: "" },
@@ -483,7 +483,7 @@ const TRACKS = [
         description:
           "Quantify the dissolved world: molarity, dilutions, solution stoichiometry, and colligative-property calculations.",
         topics: ["Molarity", "Dilutions", "Solution stoichiometry", "Colligative property calculations", "Beer's law (intro)"],
-        game: { title: "Chemia", slug: "chemia" },
+        game: { title: "Qz", slug: "quiz" },
         resources: [
           { title: "Solutions & Concentration Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Molarity & Colligative Slides", kind: "slides", type: "gslides", url: "" },
