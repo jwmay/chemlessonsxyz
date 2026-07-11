@@ -23,6 +23,12 @@
    - url:     link to the resource. Leave "" to show it as "In progress".
    - copyUrl: (optional) a Google "force copy" link. For any Google file,
               replace /edit... at the end of the URL with /copy to make one.
+
+   UNIT FIELD (optional)
+   - game:    companion Chem Cash game for the unit, e.g.
+              game: { title: "Lewis Lab", slug: "lewis-lab" }
+              Renders a "Companion game" chip in the unit's curriculum card,
+              linking to SITE.chemCashUrl + "#" + slug.
    ========================================================================== */
 
 const SITE = {
@@ -32,8 +38,8 @@ const SITE = {
   email: "hello@chemlessons.xyz",
   // Companion site
   companionSite: "https://docmayscience.com",
-  // Chem Cash — classroom economy app (marketing page; the root URL is the sign-in)
-  chemCashUrl: "https://chem.cash/about?ref=chemlessons",
+  // Chem Cash — classroom economy app (marketing lives at the root; sign-in moved to its own route)
+  chemCashUrl: "https://chem.cash/?ref=chemlessons",
 };
 
 /* Resource type → icon + color + label (Font Awesome Pro classes, emoji fallback) */
@@ -158,6 +164,7 @@ const TRACKS = [
         description:
           "Discover the logic of the table: families, metals and nonmetals, and the patterns that predict behavior.",
         topics: ["Organization of the table", "Element families", "Metals & nonmetals", "Valence electrons", "Trends (conceptual)"],
+        game: { title: "PT", slug: "pt" },
         resources: [
           { title: "Periodic Table Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Families of the Periodic Table Slides", kind: "slides", type: "gslides", url: "" },
@@ -176,6 +183,7 @@ const TRACKS = [
         description:
           "Why atoms stick together: ionic, covalent, and metallic bonding, and how bond type shapes properties.",
         topics: ["Why atoms bond", "Ionic bonding", "Covalent bonding", "Metallic bonding", "Properties & bond type", "Naming (intro)"],
+        game: { title: "Elementman Bond", slug: "elementman-bond" },
         resources: [
           { title: "Chemical Bonding Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Ionic vs. Covalent Slides", kind: "slides", type: "gslides", url: "" },
@@ -315,6 +323,7 @@ const TRACKS = [
         description:
           "Set the quantitative foundation: significant figures, dimensional analysis, percent error, and graphing real data.",
         topics: ["SI units", "Significant figures", "Dimensional analysis", "Accuracy vs. precision", "Percent error", "Graphing & linearization"],
+        game: { title: "Measure", slug: "measure" },
         resources: [
           { title: "Measurement & Data Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Measurement & Sig Figs Slides", kind: "slides", type: "gslides", url: "" },
@@ -351,6 +360,7 @@ const TRACKS = [
         description:
           "Quantify the quantum: E = hν calculations, electron configurations, orbital diagrams, and trend evidence.",
         topics: ["E = hν & c = λν calculations", "Electron configuration", "Orbital diagrams", "Quantum numbers", "Periodic trends & data"],
+        game: { title: "PT", slug: "pt" },
         resources: [
           { title: "Electrons & Periodicity Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Quantum Model Slides", kind: "slides", type: "gslides", url: "" },
@@ -369,6 +379,7 @@ const TRACKS = [
         description:
           "From Lewis structures through VSEPR geometry, polarity, and intermolecular forces — structure predicts properties.",
         topics: ["Ionic & covalent bonding", "Lewis structures", "VSEPR geometry", "Polarity", "Intermolecular forces"],
+        game: { title: "Lewis Lab", slug: "lewis-lab" },
         resources: [
           { title: "Bonding & Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "VSEPR & Polarity Slides", kind: "slides", type: "gslides", url: "" },
