@@ -91,6 +91,7 @@ const TRACKS = [
         description:
           "Launch the year with what chemistry is, how chemists work, and how to stay safe while doing real science.",
         topics: ["Lab safety", "What chemists do", "Observation vs. inference", "Lab equipment", "Scientific models"],
+        game: { title: "Lab Quest", slug: "labquest" },
         resources: [
           { title: "Lab Safety & Equipment Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "How These HTML Decks Work (demo)", kind: "slides", type: "html", url: "slides/demo-deck/" },
@@ -110,6 +111,7 @@ const TRACKS = [
         description:
           "Build the particle model of matter and use it to explain states, phase changes, and everyday phenomena.",
         topics: ["Particle model", "States of matter", "Phase changes", "Particle diagrams", "Kinetic energy (conceptual)"],
+        game: { title: "Matching", slug: "matching" },
         resources: [
           { title: "Particles & Phases Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "States of Matter Slides", kind: "slides", type: "gslides", url: "" },
@@ -146,6 +148,7 @@ const TRACKS = [
         description:
           "Follow the evidence that built the modern atom: from Dalton's spheres to the electron-cloud model.",
         topics: ["History of the atom", "Protons, neutrons, electrons", "Isotopes (conceptual)", "Ions", "Models as evidence"],
+        game: { title: "Meteors", slug: "meteors" },
         resources: [
           { title: "Atomic Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "History of the Atom Slides", kind: "slides", type: "gslides", url: "" },
@@ -202,6 +205,7 @@ const TRACKS = [
         description:
           "Recognize reactions by their evidence, track atoms through balanced equations, and see conservation of mass in action.",
         topics: ["Evidence of reactions", "Conservation of mass", "Balancing with models", "Reaction types (conceptual)"],
+        game: { title: "Qz", slug: "quiz" },
         resources: [
           { title: "Chemical Reactions Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Evidence of Reactions Slides", kind: "slides", type: "gslides", url: "" },
@@ -220,6 +224,7 @@ const TRACKS = [
         description:
           "Make sense of counting by mass — what a mole is, why chemists need it, and recipe-style stoichiometry.",
         topics: ["Counting by mass", "The mole (conceptual)", "Molar mass", "Recipe stoichiometry"],
+        game: { title: "Key Smash", slug: "key-smash" },
         resources: [
           { title: "Mole Concept Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Counting by Mass Slides", kind: "slides", type: "gslides", url: "" },
@@ -238,6 +243,7 @@ const TRACKS = [
         description:
           "Explore water's special properties and what really happens, particle by particle, when things dissolve.",
         topics: ["Properties of water", "Dissolving (particle view)", "Concentration (qualitative)", "Solubility"],
+        game: { title: "Chemia", slug: "chemia" },
         resources: [
           { title: "Solutions & Water Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Dissolving & Solutions Slides", kind: "slides", type: "gslides", url: "" },
@@ -256,6 +262,7 @@ const TRACKS = [
         description:
           "Meet the acids and bases of everyday life, read the pH scale, and neutralize like a chemist.",
         topics: ["Acid & base properties", "The pH scale", "Indicators", "Neutralization", "Acids & bases at home"],
+        game: { title: "Stamp It", slug: "stampit" },
         resources: [
           { title: "Acids & Bases Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "pH & Indicators Slides", kind: "slides", type: "gslides", url: "" },
@@ -292,6 +299,7 @@ const TRACKS = [
         description:
           "Finish with the nucleus: radioactive decay, half-life, and an evidence-based look at nuclear energy in society.",
         topics: ["Radioactive decay", "Half-life (conceptual)", "Fission & fusion", "Nuclear energy & society"],
+        game: { title: "Elemental", slug: "elemental" },
         resources: [
           { title: "Nuclear Chemistry Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Nuclear Decay Slides", kind: "slides", type: "gslides", url: "" },
@@ -342,6 +350,7 @@ const TRACKS = [
         description:
           "Subatomic accounting: isotopes, ions, weighted-average atomic mass, and the data behind mass spectrometry.",
         topics: ["Subatomic particles", "Isotopes & ions", "Average atomic mass calculations", "Mass spectrometry (intro)", "Nuclear symbol notation"],
+        game: { title: "Stamp It", slug: "stampit" },
         resources: [
           { title: "Atomic Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Atomic Structure & Mass Spec Slides", kind: "slides", type: "gslides", url: "" },
@@ -398,6 +407,7 @@ const TRACKS = [
         description:
           "Name compounds fluently, then put them on the balance: molar mass, percent composition, and formula determination.",
         topics: ["Nomenclature", "The mole & molar mass", "Percent composition", "Empirical & molecular formulas", "Hydrates"],
+        game: { title: "Meteors", slug: "meteors" },
         resources: [
           { title: "Nomenclature & Mole Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "The Mole & Formula Math Slides", kind: "slides", type: "gslides", url: "" },
@@ -416,6 +426,7 @@ const TRACKS = [
         description:
           "Balance and classify reactions, apply solubility rules, and strip spectator ions down to net ionic equations.",
         topics: ["Balancing equations", "Reaction types", "Predicting products", "Solubility rules", "Net ionic equations"],
+        game: { title: "Matching", slug: "matching" },
         resources: [
           { title: "Chemical Reactions Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Net Ionic Equations Slides", kind: "slides", type: "gslides", url: "" },
@@ -434,6 +445,7 @@ const TRACKS = [
         description:
           "The quantitative heart of the course: mole ratios, limiting reactants, percent yield, and lab-verified predictions.",
         topics: ["Mole ratios", "Mass-mass stoichiometry", "Limiting reactants", "Percent yield", "Error analysis"],
+        game: { title: "Key Smash", slug: "key-smash" },
         resources: [
           { title: "Stoichiometry Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Limiting Reactant & Yield Slides", kind: "slides", type: "gslides", url: "" },
@@ -452,6 +464,7 @@ const TRACKS = [
         description:
           "Model gas behavior quantitatively: the gas laws, ideal gas equation, partial pressures, and gas stoichiometry.",
         topics: ["Kinetic molecular theory", "Gas laws", "Ideal gas law", "Dalton's law", "Graham's law", "Gas stoichiometry"],
+        game: { title: "Qz", slug: "quiz" },
         resources: [
           { title: "Gas Laws Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Ideal Gas & Partial Pressure Slides", kind: "slides", type: "gslides", url: "" },
@@ -470,6 +483,7 @@ const TRACKS = [
         description:
           "Quantify the dissolved world: molarity, dilutions, solution stoichiometry, and colligative-property calculations.",
         topics: ["Molarity", "Dilutions", "Solution stoichiometry", "Colligative property calculations", "Beer's law (intro)"],
+        game: { title: "Chemia", slug: "chemia" },
         resources: [
           { title: "Solutions & Concentration Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Molarity & Colligative Slides", kind: "slides", type: "gslides", url: "" },
@@ -542,6 +556,7 @@ const TRACKS = [
         description:
           "Decay mathematics: nuclear equations, half-life calculations, decay series, and binding energy with mass defect.",
         topics: ["Nuclear equations", "Half-life calculations", "Decay series", "Binding energy & mass defect", "Fission & fusion"],
+        game: { title: "Elemental", slug: "elemental" },
         resources: [
           { title: "Nuclear Chemistry Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Nuclear Energy Slides", kind: "slides", type: "gslides", url: "" },
