@@ -40,6 +40,18 @@ function buildEducatorAccessForm() {
     .setChoiceValues(["Conceptual Chemistry", "Mathematical Chemistry"])
     .setRequired(false);
 
+  // Optional Chem Cash invite-interest opt-in. Lives on page 0 (not a branch
+  // section) so every respondent sees it regardless of how they're verified.
+  var chemCash = form.addCheckboxItem()
+    .setTitle("Interested in Chem Cash?")
+    .setHelpText("Chem Cash is my classroom points-economy app -- students earn points for their " +
+                 "work and spend them on a class store, a live stock market, classroom jobs, and " +
+                 "chemistry games (chem.cash/about). It's invite-only while it grows.")
+    .setRequired(false);
+  chemCash.setChoices([
+    chemCash.createChoice("Yes -- send me an invite when spots open.")
+  ]);
+
   // The branching question must be the LAST item on the page; choices are wired up below.
   var role = form.addMultipleChoiceItem()
     .setTitle("Which best describes you?")

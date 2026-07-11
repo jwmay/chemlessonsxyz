@@ -59,6 +59,17 @@
 
     const trackChip = `<span class="track-chip">${track.short}</span>`;
 
+    // Optional companion-game chip (unit.game in data.js) → Chem Cash.
+    // NOTE: the `#${unit.game.slug}` deep link is omitted for now — chem.cash
+    // renders a blank page when loaded with a URL fragment. Restore the hash
+    // here once that's fixed upstream.
+    const gameChip = unit.game
+      ? `<a class="game-note" href="${SITE.chemCashUrl}"
+            target="_blank" rel="noopener noreferrer">
+            ${iconHTML("fa-duotone fa-solid fa-gamepad", "🎮")} Companion game on Chem Cash: ${unit.game.title}
+         </a>`
+      : "";
+
     return `
       <article class="unit" id="${unit.id}" data-track="${track.id}"
                data-search="${(unit.title + " " + unit.topics.join(" ")).toLowerCase()}">
@@ -83,6 +94,7 @@
               <div class="topic-tags">
                 ${unit.topics.map((t) => `<span class="topic-tag">${t}</span>`).join("")}
               </div>
+              ${gameChip}
               ${groupsHTML}
             </div>
           </div>
