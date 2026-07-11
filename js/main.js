@@ -85,7 +85,8 @@ function setTrack(id) {
    Runs before the counter/reveal observers below so placeholders like
    data-count="RESOURCES" are resolved before any animation reads them. */
 (function wireData() {
-  // footer year
+  // Footer copyright year — the markup ships a hardcoded year as a no-JS
+  // fallback; refresh it to the current year on load so it never goes stale.
   document.querySelectorAll("[data-year]").forEach((el) => {
     el.textContent = new Date().getFullYear();
   });
