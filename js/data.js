@@ -148,7 +148,7 @@ const TRACKS = [
         description:
           "Follow the evidence that built the modern atom: from Dalton's spheres to the electron-cloud model.",
         topics: ["History of the atom", "Protons, neutrons, electrons", "Isotopes (conceptual)", "Ions", "Models as evidence"],
-        game: { title: "Meteors", slug: "meteors" },
+        game: { title: "Orbit", slug: "orbit" },
         resources: [
           { title: "Atomic Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "History of the Atom Slides", kind: "slides", type: "gslides", url: "" },
@@ -281,6 +281,7 @@ const TRACKS = [
         description:
           "Follow energy through chemical and physical change — warm packs, cold packs, and where the heat really goes.",
         topics: ["Endothermic & exothermic", "Energy diagrams (conceptual)", "Heating & cooling curves", "Energy in reactions"],
+        game: { title: "Meteors", slug: "meteors" },
         resources: [
           { title: "Energy & Change Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Endo vs. Exo Slides", kind: "slides", type: "gslides", url: "" },
@@ -350,7 +351,7 @@ const TRACKS = [
         description:
           "Subatomic accounting: isotopes, ions, weighted-average atomic mass, and the data behind mass spectrometry.",
         topics: ["Subatomic particles", "Isotopes & ions", "Average atomic mass calculations", "Mass spectrometry (intro)", "Nuclear symbol notation"],
-        game: { title: "Stamp It", slug: "stampit" },
+        game: { title: "Orbit", slug: "orbit" },
         resources: [
           { title: "Atomic Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Atomic Structure & Mass Spec Slides", kind: "slides", type: "gslides", url: "" },
@@ -538,6 +539,7 @@ const TRACKS = [
         description:
           "pH mathematics from strong acids through Ka/Kb, finished with quantitative titration analysis and curves.",
         topics: ["pH & pOH calculations", "Strong vs. weak acids", "Ka/Kb (intro)", "Titration calculations", "Titration curves"],
+        game: { title: "Stamp It", slug: "stampit" },
         resources: [
           { title: "Acids & Bases Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "pH Math & Weak Acids Slides", kind: "slides", type: "gslides", url: "" },
