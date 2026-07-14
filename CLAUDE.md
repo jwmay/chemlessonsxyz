@@ -3,7 +3,8 @@
 Guidance for Claude Code working in this repo. For the project layout, the
 content model (`js/data.js`), and resource conventions, read
 **[README.md](README.md)** — it is the source of truth and this file does not
-repeat it.
+repeat it. For day-to-day operations — the npm scripts, slash commands, and the
+ship / add-content / version-tracking flows — read **[WORKFLOW.md](WORKFLOW.md)**.
 
 ## What this is
 

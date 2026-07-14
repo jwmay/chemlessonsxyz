@@ -10,6 +10,7 @@
     "lint": "html-validate *.html slides/*/*.html",
     "links": "linkinator . --recurse --skip \"^https?://(?!localhost)\"",
     "check": "npm run lint && npm run links",
+    "versions": "node scripts/versions.mjs",
     "sync": "git checkout main && git pull && git checkout dev && git merge main && git push",
     "release": "gh pr create --base main --head dev --fill"
   },
