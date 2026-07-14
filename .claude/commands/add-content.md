@@ -18,30 +18,50 @@ file ids; `.build/copy-manifest.csv` records old id → new id for every copy.
 2. Confirm the current branch is `dev`.
 3. Read the mapping sheet for that course (ids in memory) with
    `read_file_content`; parse the target unit's rows. Reconcile against
-   `.build/mapping-master.csv` by RowID — **the sheet's edits win**. Skip rows
-   with Include = "no" or "REVIEW" (report the counts). Report a reconciliation
-   summary BEFORE copying anything.
+   `.build/mapping-master.csv` by RowID — **the sheet's edits win**. Skip only
+   rows with Include = "no". Rows marked "REVIEW" ARE still copied, but into
+   staging and never published (see step 5). Report a reconciliation summary
+   (published / staged-for-review / skipped counts) BEFORE copying anything.
 4. Ensure the folder tree exists (reuse the ids in memory; create a
    `Unit NN — <name>` folder where needed):
    `chemlessons.xyz — Public/<Course>/…` and
    `chemlessons.xyz — Educators Only/<Course>/…`. Semester-final material goes in
-   a `Semester Finals` folder per course.
-5. Copy each approved file with `copy_file` into its folder using a clean name:
-   `U## · <Kind> · <Title>` (keep the LG/U numbering as the unit number). Copy
-   BOTH formats of a Doc+PDF pair. Append every old id → new id to
-   `.build/copy-manifest.csv`. Verify counts per unit; report failures rather
-   than skipping silently. Never move or modify originals.
+   a `Semester Finals` folder per course. (Both `Mathematical Chemistry` course
+   folders already exist — ids in memory.)
+   - **Shared unit (e.g. Unit 0 Classroom Procedures):** its files live ONCE,
+     under whichever course first received them. Do NOT re-copy them into the
+     other course — instead add a Drive **shortcut** to that existing
+     `Unit NN — …` folder inside the other course's folder. The connector can't
+     create shortcuts, so this is a one-time manual step for the user; note it in
+     the final report.
+5. Copy each file with `copy_file`, choosing its name + destination by status
+   (keep the LG/U numbering as the unit number; copy BOTH formats of a Doc+PDF
+   pair):
+   - **Approved** (Include = "yes"): name `U## · <Kind> · <Title>`, into the
+     course's `Unit NN — …` folder (educators-only material into the Educators
+     Only tree). Audience = public / educators.
+   - **REVIEW**: name **`[REVIEW] U## · <Kind> · <Title>`** — the `[REVIEW]`
+     prefix makes it obvious at a glance in Drive. Copy into
+     `chemlessons.xyz — Site Build/Pending Review/<Course> Unit NN — …`
+     (**outside** the public share, so it can't leak). Audience = review, and do
+     NOT wire it into `js/data.js` (step 7) — it stays unlinked until approved.
+   Append every old id → new id (with Audience) to `.build/copy-manifest.csv`.
+   Verify counts per unit; report failures rather than skipping silently. Never
+   move or modify originals.
 6. If the Public folder isn't shared "Anyone with the link – Viewer" yet, STOP
    and remind the user — otherwise the links and hover/card thumbnails 403.
 7. Wire `js/data.js`: add or extend the unit (`id: "<course>-unit-<n>"`, `num`,
    `symbol`, `semester`, `title`, `weeks`, `description`, `topics`, `resources`).
+   Only PUBLISHED resources go here — REVIEW-staged files stay out until approved.
    Link formats from the NEW file ids:
    - Google-native → `url` = `/preview`, `copyUrl` = `/copy`
    - Binary (PDF) → `url` = `.../file/d/<id>/view`
    - Doc+PDF pair → `url` = PDF `/view`, `copyUrl` = native `/copy`
    Educators-only assessments: list them but leave `url` "" (the lock-note UI
    gates them). Honors variants get "(Honors)" in the title. A shared unit (e.g.
-   Unit 0 Classroom Procedures) is identical in both courses — mirror it.
+   Unit 0 Classroom Procedures) is identical in both courses — reuse the SAME
+   file ids in both course entries (never a second copy; see step 4's shortcut
+   rule for the Drive side).
 8. Seed versions for the new resources: fetch the new copy-source ids'
    `modifiedTime`s (`get_file_metadata`, `excludeContentSnippets: true`) → write
    `observed.json` → `node scripts/versions.mjs seed <observed.json>` (bakes v1

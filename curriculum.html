@@ -58,28 +58,32 @@
 
     <div class="filter-bar">
       <div class="container">
-        <div class="search-wrap">
-          <i class="fa-solid fa-magnifying-glass" data-fb="🔍" aria-hidden="true"></i>
-          <input type="search" data-search-input placeholder="Search topics or resources…"
-                 aria-label="Search resources">
+        <div class="filter-row">
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass" data-fb="🔍" aria-hidden="true"></i>
+            <input type="search" data-search-input placeholder="Search topics or resources…"
+                   aria-label="Search resources">
+          </div>
+          <div class="view-toggle" data-view-toggle role="group" aria-label="Resource layout">
+            <button type="button" class="view-btn active" data-view="table" aria-pressed="true">
+              <i class="fa-solid fa-list" data-fb="☰" aria-hidden="true"></i> Table
+            </button>
+            <button type="button" class="view-btn" data-view="cards" aria-pressed="false">
+              <i class="fa-solid fa-grid-2" data-fb="▦" aria-hidden="true"></i> Cards
+            </button>
+          </div>
         </div>
-        <div class="filter-chips" role="group" aria-label="Filter by resource type">
-          <button type="button" class="filter-chip active" data-kind="all">All</button>
-          <button type="button" class="filter-chip" data-kind="notebook">Notebook</button>
-          <button type="button" class="filter-chip" data-kind="slides">Slides</button>
-          <button type="button" class="filter-chip" data-kind="assignment">Assignments</button>
-          <button type="button" class="filter-chip" data-kind="lab">Labs</button>
-          <button type="button" class="filter-chip" data-kind="activity">Activities</button>
-          <button type="button" class="filter-chip" data-kind="assessment">Assessments</button>
-        </div>
-        <span class="filter-count" data-filter-count aria-live="polite"></span>
-        <div class="view-toggle" data-view-toggle role="group" aria-label="Resource layout">
-          <button type="button" class="view-btn active" data-view="table" aria-pressed="true">
-            <i class="fa-solid fa-list" data-fb="☰" aria-hidden="true"></i> Table
-          </button>
-          <button type="button" class="view-btn" data-view="cards" aria-pressed="false">
-            <i class="fa-solid fa-grid-2" data-fb="▦" aria-hidden="true"></i> Cards
-          </button>
+        <div class="filter-row filter-row-filters">
+          <div class="filter-chips" role="group" aria-label="Filter by resource type">
+            <button type="button" class="filter-chip active" data-kind="all">All</button>
+            <button type="button" class="filter-chip" data-kind="notebook">Notebook</button>
+            <button type="button" class="filter-chip" data-kind="slides">Slides</button>
+            <button type="button" class="filter-chip" data-kind="assignment">Assignments</button>
+            <button type="button" class="filter-chip" data-kind="lab">Labs</button>
+            <button type="button" class="filter-chip" data-kind="activity">Activities</button>
+            <button type="button" class="filter-chip" data-kind="assessment">Assessments</button>
+          </div>
+          <span class="filter-count" data-filter-count aria-live="polite"></span>
         </div>
       </div>
     </div>

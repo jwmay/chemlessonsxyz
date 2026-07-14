@@ -106,9 +106,19 @@ Use **`/add-content <course> <unit #>`**. It follows the flow used for Unit 0:
 6. Seed versions (`scripts/versions.mjs seed`) so new resources start at v1.
 7. `npm run check`, screenshot, then `/ship`.
 
-Files under review (not yet approved) are staged in
+**Shared units (e.g. Unit 0 Classroom Procedures)** belong to both courses but
+their files exist **once**. In `js/data.js`, both course entries reuse the *same*
+file ids — never a second copy. In Drive, the files live under the first course;
+the other course gets a **shortcut** to that `Unit NN — …` folder (the connector
+can't create shortcuts, so that click is manual). The empty
+`Public / Mathematical Chemistry` and `Educators Only / Mathematical Chemistry`
+folders already exist as the home for those shortcuts and future Math content.
+
+Files under review (not yet approved) are copied — not skipped — into
 `chemlessons.xyz — Site Build/Pending Review/` — **outside** the public share, so
-they don't leak.
+they don't leak. Each is named with a **`[REVIEW]`** prefix
+(`[REVIEW] U## · Kind · Title`) so it's obvious at a glance in Drive, and it's
+left out of `js/data.js` (unlinked on the site) until you approve it.
 
 ---
 

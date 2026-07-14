@@ -110,6 +110,10 @@ const TRACKS = [
           { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
+          { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
           { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "" },
           { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "" },
         ],
@@ -384,6 +388,10 @@ const TRACKS = [
           { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
+          { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
           { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "" },
           { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "" },
         ],
@@ -641,6 +649,15 @@ const TRACKS = [
    Add a folder under /slides/ and list it here. Optional `track` field
    shows a course label on the card (e.g. "Conceptual", "Mathematical"). */
 const DECKS = [
+  {
+    title: "Classroom Procedures & Expectations",
+    unit: "Unit 0 · Classroom Procedures",
+    description:
+      "Guided-notes slides for the first days of class: how to start class, the green/red light system, hand signals for the restroom, tissue, and nurse, plus the rules, norms, and consequences.",
+    url: "slides/unit-0-procedures/",
+    icon: "fa-duotone fa-solid fa-list-check",
+    fb: "📋",
+  },
   {
     title: "Demo Deck: How These Slides Work",
     unit: "Template",
