@@ -854,17 +854,32 @@ a:hover { color: var(--blue-dark); }
   border-bottom: 1px solid var(--line);
 }
 
+/* Two intentional rows: [search ————— view toggle] over [type chips ——— count] */
 .filter-bar .container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.filter-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.7rem;
 }
 
+.filter-row .view-toggle { margin-left: auto; flex-shrink: 0; }
+.filter-row-filters .filter-count { margin-left: auto; }
+
+@media (max-width: 560px) {
+  .search-wrap { max-width: none; flex-basis: 100%; }
+  .filter-row .view-toggle { margin-left: 0; }
+}
+
 .search-wrap {
   position: relative;
   flex: 1 1 220px;
-  max-width: 340px;
+  max-width: 420px;
 }
 
 .search-wrap i {
