@@ -11,6 +11,15 @@
 
   const KIND_ORDER = ["notebook", "slides", "assignment", "lab", "activity", "assessment"];
 
+  // Resource types whose Google Drive file exposes a first-page thumbnail we
+  // can show as a hover preview. Others (gform, html, video, link) don't.
+  const PREVIEWABLE = new Set(["gdoc", "gsheet", "gslides", "pdf"]);
+  // Pull the Drive file id out of a /d/<id>/ style url (preview or /view).
+  function driveId(url) {
+    const m = /\/d\/([^/?#]+)/.exec(url || "");
+    return m ? m[1] : "";
+  }
+
   let activeKind = "all";
   let searchTerm = "";
 
@@ -19,20 +28,21 @@
   function resourceHTML(res) {
     const type = RESOURCE_TYPES[res.type] || RESOURCE_TYPES.link;
     const soon = !res.url;
+    const previewId = !soon && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
     const title = soon
       ? `<span>${res.title}</span>`
-      : `<a href="${res.url}" target="_blank" rel="noopener">${res.title}</a>`;
+      : `<a href="${res.url}" target="_blank" rel="noopener"${previewId ? ` data-preview="${previewId}"` : ""}>${res.title}</a>`;
     const badge = soon
       ? `<span class="soon-badge">In progress</span>`
       : `<span class="type-badge" style="background:${type.color}">${type.label}</span>`;
     const copy = res.copyUrl
-      ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">Make a copy</a>`
+      ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
       : "";
     return `
       <li class="resource-item${soon ? " soon" : ""}" data-kind="${res.kind}" data-search="${(res.title + " " + type.label).toLowerCase()}">
         <span class="resource-icon" style="background:${type.color}">${iconHTML(type.icon, type.fb)}</span>
         <span class="resource-title">${title}</span>
-        <span class="resource-actions">${copy}${badge}</span>
+        <span class="resource-actions">${badge}${copy}</span>
       </li>`;
   }
 
@@ -146,6 +156,100 @@
     }
   }
 
+  /* ---------- hover thumbnail preview ----------
+     On hover/focus of a resource link, float a card with the Drive file's
+     first-page thumbnail. Desktop pointers only; the card only appears once
+     the image actually loads, so files that aren't public (or have no
+     thumbnail yet) simply show nothing — never a broken image. */
+  function initResourcePreview() {
+    const fine =
+      window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!fine) return;
+
+    const pop = document.createElement("div");
+    pop.className = "res-preview";
+    pop.setAttribute("aria-hidden", "true");
+    pop.innerHTML =
+      '<div class="res-preview-frame"><img alt="" decoding="async" referrerpolicy="no-referrer"></div>';
+    document.body.appendChild(pop);
+    const img = pop.querySelector("img");
+
+    const failed = new Set();
+    let currentId = null;
+    let anchor = null;
+    let timer = null;
+
+    function position() {
+      if (!anchor) return;
+      const r = anchor.getBoundingClientRect();
+      const pw = pop.offsetWidth;
+      const ph = pop.offsetHeight;
+      const left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12));
+      let top = r.top - ph - 10;
+      if (top < 12) top = r.bottom + 10;
+      pop.style.left = left + "px";
+      pop.style.top = top + "px";
+    }
+
+    function show(a) {
+      const id = a.dataset.preview;
+      if (!id || failed.has(id)) return;
+      currentId = id;
+      anchor = a;
+      pop.classList.add("open");
+      pop.classList.remove("ready");
+      if (img.dataset.id === id && img.complete && img.naturalWidth > 0) {
+        pop.classList.add("ready");
+      } else {
+        img.dataset.id = id;
+        img.src = "https://drive.google.com/thumbnail?id=" + id + "&sz=w600";
+      }
+      position();
+    }
+
+    function hide() {
+      clearTimeout(timer);
+      timer = null;
+      currentId = null;
+      anchor = null;
+      pop.classList.remove("open", "ready");
+    }
+
+    img.addEventListener("load", () => {
+      if (img.dataset.id === currentId && img.naturalWidth > 0) {
+        pop.classList.add("ready");
+        position();
+      }
+    });
+    img.addEventListener("error", () => {
+      failed.add(img.dataset.id);
+      if (img.dataset.id === currentId) hide();
+    });
+
+    root.addEventListener("mouseover", (e) => {
+      const a = e.target.closest("a[data-preview]");
+      if (!a || a === anchor) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => show(a), 140);
+    });
+    root.addEventListener("mouseout", (e) => {
+      const a = e.target.closest("a[data-preview]");
+      if (a && !(e.relatedTarget && a.contains(e.relatedTarget))) hide();
+    });
+    root.addEventListener("focusin", (e) => {
+      const a = e.target.closest("a[data-preview]");
+      if (a) show(a);
+    });
+    root.addEventListener("focusout", (e) => {
+      if (e.target.closest("a[data-preview]")) hide();
+    });
+    window.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hide();
+    });
+  }
+
   /* ---------- track visibility ---------- */
 
   function showActiveTrack() {
@@ -234,6 +338,7 @@
   /* ---------- boot ---------- */
 
   render();
+  initResourcePreview();
 
   // main.js has already resolved the initial track from the URL hash
   showActiveTrack();
