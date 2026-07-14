@@ -29,12 +29,18 @@ only Claude can fetch the current modified times.
    `modifiedTime` moved since their recorded baseline (update candidates), plus
    any untracked files.
 6. Show the candidates to the user and let them choose which are REAL updates —
-   a stray auto-save should not bump a version. If there are untracked files
-   (newly added resources not yet seeded), offer to `seed` them at v1 instead.
+   a stray auto-save, a rename, or finalizing a just-published file should not
+   bump a version. If there are untracked files (newly added resources not yet
+   seeded), offer to `seed` them at v1 instead.
 7. Apply the user's decisions:
    - Approved bumps: `node scripts/versions.mjs apply <observed.json> <id> [<id> …]`
      (bumps the version, sets `updated` to today, and rewrites the version/updated
      fields in `js/data.js`).
+   - **Not a real update** (keep the version): `node scripts/versions.mjs dismiss
+     <observed.json> <id> [<id> …]` — advances the recorded baseline to the
+     observed time so it stops flagging, refreshes the label, and leaves the
+     version and `js/data.js` untouched. Without this a rejected candidate
+     re-appears every run.
    - New files to baseline: `node scripts/versions.mjs seed <observed.json>`.
 8. Run `npm run check` (must pass).
 9. Report the bumps (title, v→v, date). The user ships with `/ship` when ready.
