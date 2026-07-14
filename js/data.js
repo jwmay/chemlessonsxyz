@@ -23,6 +23,10 @@
    - url:     link to the resource. Leave "" to show it as "In progress".
    - copyUrl: (optional) a Google "force copy" link. For any Google file,
               replace /edit... at the end of the URL with /copy to make one.
+   - deckUrl: (optional) path to an on-site HTML slide deck version of this
+              resource (e.g. "slides/unit-0-procedures/"). Renders a "Web
+              slides" link on the curriculum card so users can open the HTML
+              deck without visiting the Slide Decks page.
 
    UNIT FIELD (optional)
    - game:    companion Chem Cash game for the unit, e.g.
@@ -110,7 +114,7 @@ const TRACKS = [
           { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
-          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", deckUrl: "slides/unit-0-procedures/", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
           { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
@@ -388,7 +392,7 @@ const TRACKS = [
           { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
-          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", version: 1, updated: "2026-07-14" },
+          { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", deckUrl: "slides/unit-0-procedures/", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
           { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
