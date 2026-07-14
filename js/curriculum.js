@@ -20,6 +20,18 @@
     return m ? m[1] : "";
   }
 
+  // Version + last-updated chip. `updated` is an ISO date (YYYY-MM-DD) written
+  // by scripts/versions.mjs; show it as "v2 · Aug 2026" so teachers who copied
+  // an earlier version can see something newer is available.
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function versionMeta(res) {
+    if (!res.version) return "";
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(res.updated || "");
+    const when = m ? ` · ${MONTHS[+m[2] - 1]} ${m[1]}` : "";
+    const tip = `Version ${res.version}${res.updated ? " · updated " + res.updated : ""}`;
+    return `<span class="res-ver" title="${tip}">v${res.version}${when}</span>`;
+  }
+
   let activeKind = "all";
   let searchTerm = "";
   let viewMode = "table"; // "table" | "cards" — table is the default (nothing to preload)
@@ -43,7 +55,7 @@
       <li class="resource-item${soon ? " soon" : ""}" data-kind="${res.kind}" data-search="${(res.title + " " + type.label).toLowerCase()}">
         <span class="resource-icon" style="background:${type.color}">${iconHTML(type.icon, type.fb)}</span>
         <span class="resource-title">${title}</span>
-        <span class="resource-actions">${badge}${copy}</span>
+        <span class="resource-actions">${versionMeta(res)}${badge}${copy}</span>
       </li>`;
   }
 
@@ -75,6 +87,7 @@
         ${thumb}
         <div class="card-body">
           <div class="card-title-line">${title}</div>
+          ${res.version ? `<div class="card-meta">${versionMeta(res)}</div>` : ""}
           <div class="card-actions">${badge}${copy}</div>
         </div>
       </article>`;

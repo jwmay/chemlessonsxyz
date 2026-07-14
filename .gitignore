@@ -9,5 +9,10 @@ node_modules/
 # Claude local settings (machine-specific permissions)
 .claude/settings.local.json
 
-# Site-build working data (not deployed)
-.build/
+# Site-build working data. The Drive inventory + master mapping enumerate the
+# PRIVATE district Drive (2,172 files: titles, ids, folder paths, account
+# email), so they stay OUT of this PUBLIC repo. The version state and copy
+# manifest hold only already-public site data, so they ARE committed as backup.
+.build/*
+!.build/versions.json
+!.build/copy-manifest.csv

@@ -1275,6 +1275,15 @@ a.card-title:hover { color: var(--blue); }
 .resource-card.soon { opacity: 0.72; }
 .resource-card.soon .card-title { color: var(--gray); }
 
+/* Version + last-updated stamp on resources */
+.res-ver {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gray-light);
+  white-space: nowrap;
+}
+.card-meta { margin-top: -0.1rem; }
+
 .resource-item.soon { opacity: 0.62; }
 .resource-item.soon .resource-title { color: var(--gray); }
 
