@@ -74,6 +74,9 @@ without your approval.
   - `seed <observed.json>` — baseline new files at v1.
   - `propose <observed.json>` — list files whose `modifiedTime` moved (candidates).
   - `apply <observed.json> <fileId …>` — bump only the ids you approve.
+  - `dismiss <observed.json> <fileId …>` — for a change that ISN'T a real update
+    (a rename, finalizing a just-published file): advance the baseline so it
+    stops flagging, keep the version, leave `data.js` alone.
 - The tool writes `version` + `updated` into `js/data.js`; the curriculum page
   shows a muted "v2 · Aug 2026" chip on each linked resource.
 

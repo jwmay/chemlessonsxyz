@@ -140,14 +140,38 @@ function apply(observedPath, ids) {
   console.log(`applied ${bumped} bump(s); rewrote ${touched} data.js line(s)`);
 }
 
+// Acknowledge an edit WITHOUT bumping: advance the recorded baseline to the
+// observed modifiedTime (so it stops showing as a candidate) and refresh the
+// state label from data.js. The version and data.js are left untouched. Use
+// this when you decide a change isn't a real "new version" (a rename, a typo
+// fix, finalizing touches on a just-published file).
+function dismiss(observedPath, ids) {
+  const observed = loadObserved(observedPath);
+  const state = loadState();
+  const titles = titlesFromData();
+  let updated = 0;
+  for (const id of ids) {
+    if (!state[id]) { console.warn(`skip ${id}: not tracked (seed it first)`); continue; }
+    if (!observed[id]) { console.warn(`skip ${id}: no observed modifiedTime supplied`); continue; }
+    state[id].modified = observed[id];
+    if (titles[id]) state[id].title = titles[id];
+    console.log(`dismissed "${state[id].title}" — baseline -> ${observed[id]} (still v${state[id].version})`);
+    updated++;
+  }
+  saveState(state);
+  console.log(`re-baselined ${updated} file(s); no version bumped, js/data.js unchanged`);
+}
+
 const [cmd, observedPath, ...rest] = process.argv.slice(2);
 if (cmd === "seed" && observedPath) seed(observedPath);
 else if (cmd === "propose" && observedPath) propose(observedPath);
 else if (cmd === "apply" && observedPath && rest.length) apply(observedPath, rest);
+else if (cmd === "dismiss" && observedPath && rest.length) dismiss(observedPath, rest);
 else {
   console.log("usage:");
   console.log("  node scripts/versions.mjs seed    <observed.json>");
   console.log("  node scripts/versions.mjs propose <observed.json>");
   console.log("  node scripts/versions.mjs apply   <observed.json> <fileId> [<fileId> ...]");
+  console.log("  node scripts/versions.mjs dismiss <observed.json> <fileId> [<fileId> ...]");
   process.exit(1);
 }
