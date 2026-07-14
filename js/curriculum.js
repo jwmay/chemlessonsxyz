@@ -22,6 +22,7 @@
 
   let activeKind = "all";
   let searchTerm = "";
+  let viewMode = "table"; // "table" | "cards" — table is the default (nothing to preload)
 
   /* ---------- rendering ---------- */
 
@@ -46,12 +47,50 @@
       </li>`;
   }
 
+  // Card-view variant: same data as a row, but the preview is shown inline
+  // (eagerly, lazy-loaded) instead of on hover. Only built when card view is
+  // active, so table view never requests a thumbnail.
+  function resourceCardHTML(res) {
+    const type = RESOURCE_TYPES[res.type] || RESOURCE_TYPES.link;
+    const soon = !res.url;
+    const previewId = !soon && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
+    const gated = soon && res.kind === "assessment";
+    const inner = previewId
+      ? `<img class="card-thumb-img" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="https://drive.google.com/thumbnail?id=${previewId}&sz=w600">`
+      : `<span class="card-thumb-icon">${iconHTML(gated ? "fa-solid fa-lock" : type.icon, gated ? "🔒" : type.fb)}</span>`;
+    const thumb = soon
+      ? `<span class="card-thumb is-empty">${inner}</span>`
+      : `<a class="card-thumb${previewId ? "" : " is-empty"}" href="${res.url}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${inner}</a>`;
+    const title = soon
+      ? `<span class="card-title">${res.title}</span>`
+      : `<a class="card-title" href="${res.url}" target="_blank" rel="noopener">${res.title}</a>`;
+    const badge = soon
+      ? `<span class="soon-badge">In progress</span>`
+      : `<span class="type-badge" style="background:${type.color}">${type.label}</span>`;
+    const copy = res.copyUrl
+      ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
+      : "";
+    return `
+      <article class="resource-card${soon ? " soon" : ""}" data-kind="${res.kind}" data-search="${(res.title + " " + type.label).toLowerCase()}">
+        ${thumb}
+        <div class="card-body">
+          <div class="card-title-line">${title}</div>
+          <div class="card-actions">${badge}${copy}</div>
+        </div>
+      </article>`;
+  }
+
   function unitHTML(unit, track) {
     const groups = KIND_ORDER.filter((k) => unit.resources.some((r) => r.kind === k));
+    const cards = viewMode === "cards";
     const groupsHTML = groups
       .map((kind) => {
         const meta = RESOURCE_KINDS[kind];
-        const items = unit.resources.filter((r) => r.kind === kind).map(resourceHTML).join("");
+        const res = unit.resources.filter((r) => r.kind === kind);
+        const items = res.map(cards ? resourceCardHTML : resourceHTML).join("");
+        const list = cards
+          ? `<div class="resource-grid">${items}</div>`
+          : `<ul class="resource-list">${items}</ul>`;
         const lock =
           kind === "assessment"
             ? `<a class="lock-note" data-request-access href="assessments.html">
@@ -61,7 +100,7 @@
         return `
           <div class="resource-group" data-group="${kind}">
             <div class="resource-group-label">${iconHTML(meta.icon, meta.fb)} ${meta.label}</div>
-            <ul class="resource-list">${items}</ul>
+            ${list}
             ${lock}
           </div>`;
       })
@@ -270,7 +309,7 @@
     activePanel.querySelectorAll(".unit").forEach((unitEl) => {
       let unitMatches = 0;
 
-      unitEl.querySelectorAll(".resource-item").forEach((item) => {
+      unitEl.querySelectorAll(".resource-item, .resource-card").forEach((item) => {
         const kindOk = activeKind === "all" || item.dataset.kind === activeKind;
         const searchOk =
           !term ||
@@ -283,7 +322,7 @@
 
       // hide groups with no visible items
       unitEl.querySelectorAll(".resource-group").forEach((group) => {
-        const any = [...group.querySelectorAll(".resource-item")].some(
+        const any = [...group.querySelectorAll(".resource-item, .resource-card")].some(
           (i) => i.style.display !== "none"
         );
         group.style.display = any ? "" : "none";
@@ -333,6 +372,33 @@
       activeKind = chip.dataset.kind;
       applyFilters();
     });
+  });
+
+  /* ---------- table / card view toggle ----------
+     Re-renders the active view. Table is the default and loads no thumbnails;
+     card view builds inline (lazy-loaded) previews only once chosen. */
+  function setView(mode) {
+    if (mode === viewMode || (mode !== "table" && mode !== "cards")) return;
+    const open = [...root.querySelectorAll(".unit.open")].map((u) => u.id);
+    viewMode = mode;
+    document.querySelectorAll("[data-view-toggle] .view-btn").forEach((b) => {
+      const on = b.dataset.view === mode;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+    render();
+    open.forEach((id) => {
+      const u = document.getElementById(id);
+      if (u) {
+        u.classList.add("open");
+        u.querySelector(".unit-header").setAttribute("aria-expanded", "true");
+      }
+    });
+    showActiveTrack();
+  }
+
+  document.querySelectorAll("[data-view-toggle] .view-btn").forEach((btn) => {
+    btn.addEventListener("click", () => setView(btn.dataset.view));
   });
 
   /* ---------- boot ---------- */

@@ -748,6 +748,24 @@ a:hover { color: var(--blue-dark); }
   box-shadow: 0 3px 10px rgba(221, 151, 78, 0.4);
 }
 
+/* Phones: the two course labels are too long to sit side by side, so the
+   inline pill wraps and half-fills its row (looks broken). Stack them into a
+   full-width segmented control instead — applies to the homepage switcher too. */
+@media (max-width: 560px) {
+  .track-switch {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    border-radius: 16px;
+  }
+  .track-btn {
+    width: 100%;
+    justify-content: center;
+    border-radius: 12px;
+  }
+}
+
 .track-tagline {
   color: var(--gray);
   font-size: 0.98rem;
@@ -906,6 +924,32 @@ a:hover { color: var(--blue-dark); }
   color: var(--gray-light);
   font-weight: 600;
 }
+
+/* Table / card view toggle (segmented control) */
+.view-toggle {
+  display: inline-flex;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--white);
+}
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.85rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.view-btn:hover { color: var(--blue); }
+.view-btn.active { background: var(--blue); color: #fff; }
+.view-btn i { font-size: 0.9em; }
 
 /* ==========================================================================
    Curriculum page — semester + unit accordions
@@ -1099,6 +1143,18 @@ a:hover { color: var(--blue-dark); }
   flex-shrink: 0;
 }
 
+@media (max-width: 560px) {
+  /* Phones: the badge + "Make a copy" button take a fixed ~260px, which
+     crushes the title into a narrow, multi-line column. Let the row wrap so
+     the actions drop to their own line, indented under the title. */
+  .resource-item { flex-wrap: wrap; row-gap: 0.45rem; }
+  .resource-item .resource-actions {
+    flex-basis: 100%;
+    padding-left: calc(34px + 0.8rem);
+    justify-content: flex-start;
+  }
+}
+
 .type-badge {
   font-size: 0.7rem;
   font-weight: 700;
@@ -1153,6 +1209,71 @@ a:hover { color: var(--blue-dark); }
   background: var(--blue-050);
 }
 .res-preview img { display: block; width: 100%; height: auto; }
+
+/* Card / grid view for resources */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.resource-card:hover {
+  box-shadow: 0 10px 26px rgba(31, 45, 61, 0.14);
+  transform: translateY(-2px);
+}
+.card-thumb {
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--blue-050);
+  overflow: hidden;
+}
+.card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.card-thumb.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--blue-200);
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.7rem 0.8rem 0.8rem;
+  flex: 1;
+}
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.3;
+}
+a.card-title:hover { color: var(--blue); }
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.resource-card.soon { opacity: 0.72; }
+.resource-card.soon .card-title { color: var(--gray); }
 
 .resource-item.soon { opacity: 0.62; }
 .resource-item.soon .resource-title { color: var(--gray); }
