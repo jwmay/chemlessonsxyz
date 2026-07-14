@@ -1197,6 +1197,25 @@ a:hover { color: var(--blue-dark); }
 .copy-link i { font-size: 0.85em; }
 .copy-link:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 
+/* "Web slides" link — opens an on-site HTML deck version of a resource
+   (res.deckUrl). Orange accent to set it apart from the blue "Make a copy". */
+.deck-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--orange-dark);
+  text-decoration: none;
+  padding: 0.25rem 0.65rem;
+  border: 1.5px solid var(--orange-100);
+  border-radius: 999px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.deck-link i { font-size: 0.85em; }
+.deck-link:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+
 /* Hover thumbnail preview (curriculum resource links). Positioned by
    curriculum.js; only fades in once the Drive thumbnail has loaded. */
 .res-preview {

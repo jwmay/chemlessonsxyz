@@ -51,11 +51,14 @@
     const copy = res.copyUrl
       ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
       : "";
+    const deck = res.deckUrl
+      ? `<a class="deck-link" href="${res.deckUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-play", "▶")} HTML deck</a>`
+      : "";
     return `
       <li class="resource-item${soon ? " soon" : ""}" data-kind="${res.kind}" data-search="${(res.title + " " + type.label).toLowerCase()}">
         <span class="resource-icon" style="background:${type.color}">${iconHTML(type.icon, type.fb)}</span>
         <span class="resource-title">${title}</span>
-        <span class="resource-actions">${versionMeta(res)}${badge}${copy}</span>
+        <span class="resource-actions">${versionMeta(res)}${badge}${deck}${copy}</span>
       </li>`;
   }
 
@@ -82,13 +85,16 @@
     const copy = res.copyUrl
       ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
       : "";
+    const deck = res.deckUrl
+      ? `<a class="deck-link" href="${res.deckUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-play", "▶")} HTML deck</a>`
+      : "";
     return `
       <article class="resource-card${soon ? " soon" : ""}" data-kind="${res.kind}" data-search="${(res.title + " " + type.label).toLowerCase()}">
         ${thumb}
         <div class="card-body">
           <div class="card-title-line">${title}</div>
           ${res.version ? `<div class="card-meta">${versionMeta(res)}</div>` : ""}
-          <div class="card-actions">${badge}${copy}</div>
+          <div class="card-actions">${badge}${deck}${copy}</div>
         </div>
       </article>`;
   }
