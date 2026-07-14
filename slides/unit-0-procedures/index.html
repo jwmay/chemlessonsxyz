@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classroom Procedures &amp; Expectations — chemlessons.xyz</title>
+  <meta name="description" content="Unit 0 guided-notes slide deck: classroom and lab procedures, hand signals, rules, norms, and expectations for chemistry class.">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <meta name="theme-color" content="#1d3a5c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       chemlessons.xyz HTML slide deck — Unit 0 Procedures
+       Built from the demo-deck template. Same navigation, progress
+       bar, and design tokens; a few extra components (steps, hand
+       signals, green/red light boxes) are defined below.
+       ============================================================ */
+    :root {
+      --blue: #3f6ea6;
+      --blue-dark: #2e5480;
+      --blue-deep: #1d3a5c;
+      --blue-100: #e9eef5;
+      --orange: #dd974e;
+      --orange-dark: #b97a2e;
+      --ink: #22344a;
+      --green: #3f9d5a;
+      --green-100: #e9f5ec;
+      --red: #c0453f;
+      --red-100: #fbe9e9;
+      --serif: "Lora", Georgia, serif;
+      --hand: "Caveat", cursive;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: var(--blue-deep);
+      font-family: var(--sans);
+      color: var(--ink);
+    }
+
+    .deck { position: relative; width: 100%; height: 100%; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 6vw, 5rem) clamp(2rem, 8vw, 7rem);
+      background: #fbfcfe;
+      opacity: 0;
+      transform: translateX(4%);
+      visibility: hidden;
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s linear 0.45s;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+
+    .slide.prev { transform: translateX(-4%); }
+
+    /* slide flavors — title, section dividers, and closing use the gradient */
+    .slide.title-slide, .slide.section-slide, .slide.closing-slide {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark) 60%, var(--blue));
+      color: #fff;
+      align-items: flex-start;
+    }
+    .title-slide h1, .section-slide h1, .closing-slide h1 { color: #fff; }
+    .title-slide .kicker, .section-slide .kicker, .closing-slide .kicker { color: var(--orange); }
+    .title-slide p, .section-slide p, .closing-slide p { color: var(--blue-100); }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 700;
+      color: var(--blue-deep);
+      line-height: 1.12;
+      margin: 0 0 0.4em;
+      max-width: 22ch;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 4.5vw, 3rem);
+      color: var(--blue-deep);
+      margin: 0 0 0.7em;
+      max-width: 24ch;
+    }
+
+    .kicker {
+      font-family: var(--hand);
+      font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+      color: var(--orange-dark);
+      display: block;
+      margin-bottom: 0.4rem;
+      transform: rotate(-1.5deg);
+    }
+
+    p, li {
+      font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    ul { padding-left: 1.2em; }
+    li { margin-bottom: 0.5em; }
+    li::marker { color: var(--orange); }
+
+    strong { color: var(--blue-dark); }
+    .title-slide strong, .section-slide strong, .closing-slide strong { color: var(--orange); }
+
+    /* inline pill for named systems (Chem Cash, Room 404, …) */
+    .tag {
+      display: inline-block;
+      background: var(--blue-deep);
+      color: #fff;
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 0.12em 0.6em;
+      border-radius: 999px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .cols { display: flex; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: flex-start; }
+    .cols > div { flex: 1; }
+
+    .statement {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      color: var(--blue-deep);
+      line-height: 1.3;
+      max-width: 26ch;
+      margin: 0;
+    }
+    .statement .hand { font-family: var(--hand); color: var(--orange-dark); }
+
+    /* learning-target card */
+    .lt-card {
+      background: var(--blue-100);
+      border-left: 6px solid var(--orange);
+      border-radius: 12px;
+      padding: clamp(1rem, 3vw, 1.6rem) clamp(1.2rem, 4vw, 2rem);
+      max-width: 60ch;
+    }
+    .lt-card .lt-label {
+      font-family: var(--hand);
+      color: var(--orange-dark);
+      font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+    .lt-card p { margin: 0 0 1.1rem; }
+    .lt-card p:last-child { margin-bottom: 0; }
+
+    /* numbered steps */
+    ol.steps { list-style: none; padding-left: 0; counter-reset: step; max-width: 62ch; }
+    ol.steps li {
+      position: relative;
+      padding-left: 3.4rem;
+      margin-bottom: 0.9em;
+      counter-increment: step;
+    }
+    ol.steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: -0.1em;
+      width: 2.3rem;
+      height: 2.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--blue);
+      color: #fff;
+      font-family: var(--serif);
+      font-weight: 700;
+      border-radius: 50%;
+      font-size: 1.15rem;
+    }
+
+    /* hand-signal cue */
+    .signal {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.8rem);
+      background: var(--blue-100);
+      border-radius: 14px;
+      padding: clamp(0.8rem, 2.5vw, 1.4rem) clamp(1rem, 3vw, 1.6rem);
+      max-width: 58ch;
+      margin: 0 0 1rem;
+    }
+    .signal-cue {
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      line-height: 1;
+      flex: none;
+    }
+    .signal p { margin: 0; }
+
+    /* green-light / red-light expectation boxes */
+    .lightbox {
+      border-radius: 14px;
+      padding: clamp(1rem, 3vw, 1.6rem) clamp(1.2rem, 4vw, 2rem);
+      max-width: 60ch;
+      border-left: 8px solid;
+    }
+    .lightbox.green { background: var(--green-100); border-color: var(--green); }
+    .lightbox.red { background: var(--red-100); border-color: var(--red); }
+    .lightbox .lbl { font-weight: 700; color: var(--blue-deep); margin: 0 0 0.2em; }
+    .lightbox ul { margin: 0 0 0.9rem; }
+    .lightbox ul:last-child { margin-bottom: 0; }
+
+    /* dashed note / prompt box */
+    .note {
+      background: #fff7ec;
+      border: 1px dashed var(--orange);
+      border-radius: 12px;
+      padding: clamp(0.9rem, 2.5vw, 1.4rem) clamp(1.1rem, 3vw, 1.6rem);
+      max-width: 58ch;
+      margin: 0.6rem 0 0;
+    }
+    .note p { margin: 0; }
+    .note .note-icon { font-size: 1.3em; margin-right: 0.4rem; }
+
+    /* footer & chrome */
+    .slide-footer {
+      position: absolute;
+      bottom: 1.1rem;
+      left: clamp(2rem, 8vw, 7rem);
+      right: clamp(2rem, 8vw, 7rem);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #96a0ad;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .title-slide .slide-footer, .section-slide .slide-footer, .closing-slide .slide-footer {
+      color: rgba(233, 238, 245, 0.55);
+    }
+
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), var(--blue));
+      width: 0;
+      z-index: 10;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .counter {
+      position: fixed;
+      bottom: 1rem;
+      right: 1.2rem;
+      z-index: 10;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(29, 58, 92, 0.75);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .nav-hint {
+      position: fixed;
+      bottom: 1rem;
+      left: 1.2rem;
+      z-index: 10;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      background: rgba(29, 58, 92, 0.75);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      opacity: 1;
+      transition: opacity 1s;
+      pointer-events: none;
+    }
+    .nav-hint.faded { opacity: 0; }
+
+    .brand-corner {
+      position: fixed;
+      top: 0.9rem;
+      right: 1.2rem;
+      z-index: 10;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--blue);
+      text-decoration: none;
+      background: rgba(255,255,255,0.85);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+    }
+    .brand-corner .xyz { font-family: var(--hand); color: var(--orange-dark); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slide, .progress { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" role="presentation"></div>
+  <a class="brand-corner" href="../../slides.html" title="Back to chemlessons.xyz">chemlessons<span class="xyz">.xyz</span></a>
+
+  <div class="deck">
+
+    <!-- 1 · Title -->
+    <section class="slide title-slide">
+      <span class="kicker">Unit 0 · chemlessons.xyz</span>
+      <h1>Classroom Procedures &amp; Expectations</h1>
+      <p>Your guided notes for surviving — and thriving — in this classroom.
+         Press <strong>→</strong> or click anywhere to begin.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 2 · Learning target -->
+    <section class="slide">
+      <span class="kicker">today's target</span>
+      <h2>What we're learning</h2>
+      <div class="lt-card">
+        <p><span class="lt-label">Learning target</span>
+           I am learning how to <strong>survive in this classroom</strong>.</p>
+        <p><span class="lt-label">Success criteria</span>
+           I can completely fill out my guided notes and list the ways of
+           conducting myself in this class.</p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 3 · Why procedures? -->
+    <section class="slide">
+      <span class="kicker">turn &amp; talk</span>
+      <h2>Why do we have procedures?</h2>
+      <div class="note">
+        <p><span class="note-icon">⏱️</span>Take <strong>90 seconds</strong> with your
+           table partner: describe the <strong>craziest</strong> class and the
+           <strong>smoothest-running</strong> class you have ever been in. What made
+           the difference?</p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 4 · Five steps to start class -->
+    <section class="slide">
+      <span class="kicker">bell to bell</span>
+      <h2>Five steps to starting class</h2>
+      <ol class="steps">
+        <li>Enter the classroom, <strong>picking up materials</strong> from the front table.</li>
+        <li>Take your <strong>seat</strong> and get out your materials.</li>
+        <li>When the music <strong>stops</strong>, begin the <strong>Reactant</strong>
+            silently and independently for 2 minutes.</li>
+        <li>When the music <strong>starts</strong>, you may <strong>discuss</strong> the
+            questions with your neighbor and ask your teacher questions.</li>
+        <li>When the music <strong>stops</strong> again, bring your <strong>attention</strong>
+            to the front of the class.</li>
+      </ol>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 5 · Materials pick-up -->
+    <section class="slide">
+      <span class="kicker">know your room</span>
+      <h2>Materials pick-up</h2>
+      <p>Your handouts wait on the <strong>front table</strong>. Grab what you need on
+         the way in — <strong>before</strong> you take your seat.</p>
+      <div class="note">
+        <p><span class="note-icon">👉</span>Point to where you pick up materials in this classroom.</p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 6 · Hazmat Center -->
+    <section class="slide">
+      <span class="kicker">know your room</span>
+      <h2>The Hazmat Center</h2>
+      <p>This is your one-stop hub for everything you need when you're out or stuck: the
+         <strong>calendar</strong>, make-up <strong>handout folders</strong>,
+         <strong>seat-change forms</strong>, and <strong>Schrödinger's Box</strong>.</p>
+      <div class="note">
+        <p><span class="note-icon">👉</span>Point to the Hazmat Center.</p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 7 · Absent -->
+    <section class="slide">
+      <span class="kicker">life happens</span>
+      <h2>What if you're absent?</h2>
+      <ol class="steps">
+        <li>Check the <strong>calendar</strong> — on the wall in the Hazmat Center or on
+            <strong>Canvas</strong>.</li>
+        <li><strong>Identify</strong> what you missed.</li>
+        <li>Get your handouts from the <strong>folders</strong>, sorted by the
+            <strong>dates</strong> you were out.</li>
+      </ol>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 8 · Tardy -->
+    <section class="slide">
+      <span class="kicker">running late?</span>
+      <h2>What if you're tardy?</h2>
+      <ul>
+        <li>Go to <strong>Room 404</strong> for tardy lockout.</li>
+        <li>Students seen <strong>hustling</strong> to class will be allowed in.</li>
+        <li>Asking to use the restroom before class starts does <strong>not</strong>
+            excuse a tardy.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 9 · Section: During instruction -->
+    <section class="slide section-slide">
+      <span class="kicker">part two</span>
+      <h1>During instruction</h1>
+      <p>A guide to what to do while class is running.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 10 · Green light -->
+    <section class="slide">
+      <span class="kicker">go</span>
+      <h2>Green light 🟢</h2>
+      <div class="lightbox green">
+        <p class="lbl">When it's used</p>
+        <ul>
+          <li>Group activities</li>
+          <li>Open discussions</li>
+          <li>Labs</li>
+        </ul>
+        <p class="lbl">Expectations</p>
+        <ul>
+          <li>Discuss and work with your partner or group on the current lesson or activity.</li>
+        </ul>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 11 · Red light -->
+    <section class="slide">
+      <span class="kicker">stop</span>
+      <h2>Red light 🔴</h2>
+      <div class="lightbox red">
+        <p class="lbl">When it's used</p>
+        <ul>
+          <li>Tests</li>
+          <li>Independent work</li>
+          <li>Note-taking</li>
+        </ul>
+        <p class="lbl">Expectations</p>
+        <ul>
+          <li>Work silently</li>
+          <li>Listen attentively</li>
+          <li>Raise your hand for questions or answers</li>
+        </ul>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 12 · Attention getter -->
+    <section class="slide">
+      <span class="kicker">eyes up front</span>
+      <h2>Getting the whole class's attention</h2>
+      <p>Your teacher raises a hand and says, <strong>“Voices off, eyes up front.”</strong>
+         The music stops and the red light comes on.</p>
+      <div class="note">
+        <p><span class="note-icon">🔊</span><strong>Let's practice!</strong> When your teacher says
+           <strong>“GO,”</strong> make as much noise as possible. When the attention-getter
+           goes up… <strong>silence — all eyes up front.</strong></p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 13 · Phones -->
+    <section class="slide">
+      <span class="kicker">school-wide rule</span>
+      <h2>What's the expectation about phones?</h2>
+      <ul>
+        <li><strong>Never</strong> used in class unless you're instructed to.</li>
+        <li><strong>First time</strong> seen using your phone: a pouch, as a warning.</li>
+        <li><strong>Second time</strong>: place it in the pouch or the charging station.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 14 · Answering questions -->
+    <section class="slide">
+      <span class="kicker">no such thing as "I don't know"</span>
+      <h2>Answering questions</h2>
+      <p>In this classroom, we <strong>DO NOT SAY</strong> “I don't know.” Instead, we
+         always do one of two things:</p>
+      <ul>
+        <li><strong>Ask a question</strong></li>
+        <li>Give our <strong>best attempt</strong> at an answer</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 15 · Whiteboards -->
+    <section class="slide">
+      <span class="kicker">handle with care</span>
+      <h2>Whiteboard procedures</h2>
+      <ul>
+        <li><strong>Do not use</strong> unless instructed.</li>
+        <li>Keep markers <strong>capped</strong> when not in use, and be gentle with them.</li>
+        <li>Put markers <strong>inside the socks</strong> when you're done.</li>
+        <li><strong>Never</strong> doodle, draw, write notes, or otherwise waste marker ink.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 16 · Section: Questions you don't ask -->
+    <section class="slide section-slide">
+      <span class="kicker">part three</span>
+      <h1>Questions you don't ask in class</h1>
+      <p>Personal needs should never interrupt class time. Here's how we handle each one —
+         silently — so learning keeps rolling.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 17 · Pencil -->
+    <section class="slide">
+      <span class="kicker">come prepared</span>
+      <h2>May I borrow a pencil?</h2>
+      <p>Come to class prepared with a <strong>pencil or a pen</strong>. If you don't
+         have one, pencils and pens can be “purchased” on <span class="tag">Chem Cash</span>.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 18 · Restroom -->
+    <section class="slide">
+      <span class="kicker">the signal</span>
+      <h2>May I use the restroom?</h2>
+      <div class="signal">
+        <span class="signal-cue" aria-hidden="true">✌️</span>
+        <p>Silently raise your <strong>crossed index and middle fingers</strong>.</p>
+      </div>
+      <ul>
+        <li>No passes in the <strong>first 5 minutes</strong> of class.</li>
+        <li>You get <strong>10 passes</strong> for the whole school year.</li>
+        <li>If approved, create your pass on <span class="tag">Chem Cash</span> and show your
+            teacher before you leave the room.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 19 · Tissue -->
+    <section class="slide">
+      <span class="kicker">the signal</span>
+      <h2>Do you have a tissue?</h2>
+      <div class="signal">
+        <span class="signal-cue" aria-hidden="true">🤙</span>
+        <p>Silently raise your <strong>pinky finger</strong>.</p>
+      </div>
+      <ul>
+        <li>Wait for your teacher's <strong>thumbs-up</strong> (👍 = yes).</li>
+        <li>You may step outside either door to blow your nose — keep
+            <strong>one foot in the door</strong>.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 20 · Nurse -->
+    <section class="slide">
+      <span class="kicker">the signal</span>
+      <h2>May I go to the nurse?</h2>
+      <div class="signal">
+        <span class="signal-cue" aria-hidden="true">🖐️</span>
+        <p>Silently raise <strong>3 fingers</strong> and wait for a response.</p>
+      </div>
+      <div class="note">
+        <p><span class="note-icon">🤔</span>Why do we have a special hand sign for the nurse
+           instead of just raising your hand?</p>
+      </div>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 21 · Seat change -->
+    <section class="slide">
+      <span class="kicker">before or after class</span>
+      <h2>Can I change my seat?</h2>
+      <ol class="steps">
+        <li>Grab a <strong>seat-change request form</strong> from the Hazmat Center.</li>
+        <li>Submit it to <strong>Schrödinger's Box</strong> in the Hazmat Center.</li>
+        <li>Do this <strong>before or after</strong> class — never during.</li>
+      </ol>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 22 · Throw away -->
+    <section class="slide">
+      <span class="kicker">green light only</span>
+      <h2>May I throw this away?</h2>
+      <p>Place it in the trash bin during <strong>green-light time only</strong>.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 23 · Grade -->
+    <section class="slide">
+      <span class="kicker">before or after class</span>
+      <h2>What is my grade?</h2>
+      <p>Check <strong>Infinite Campus</strong>, or discuss it with your teacher
+         <strong>before or after</strong> class.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 24 · Counselor -->
+    <section class="slide">
+      <span class="kicker">before or after class</span>
+      <h2>May I see my counselor?</h2>
+      <ul>
+        <li>Wait for your counselor to send a <strong>pass</strong> to see you.</li>
+        <li>Otherwise, meet with your counselor <strong>outside</strong> of class.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 25 · Call -->
+    <section class="slide">
+      <span class="kicker">must be time-sensitive</span>
+      <h2>May I take this call?</h2>
+      <ul>
+        <li>Discuss the need for the call <strong>before</strong> class.</li>
+        <li>If approved, you may step outside to take the call when it comes.</li>
+        <li>The call <strong>must be time-sensitive</strong> — one you couldn't take any
+            other time (for example, a doctor's callback).</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 26 · Classroom rules -->
+    <section class="slide">
+      <span class="kicker">the rules</span>
+      <h2>Classroom rules</h2>
+      <ul>
+        <li>Be <strong>on time</strong> and prepared.</li>
+        <li><strong>Follow directions.</strong></li>
+        <li>No cursing, bullying, or harassment.</li>
+        <li>No gum, food, or drinks — <strong>except H<sub>2</sub>O</strong>.</li>
+        <li>Bring a <strong>pencil and your notebook</strong> to class every day.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 27 · Why no gum? -->
+    <section class="slide">
+      <p class="statement">
+        Why no gum? Because it ends up under the desks, in the sinks, and on the floor —
+        <span class="hand">and this is a lab. Let's keep it clean.</span>
+      </p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 28 · Classroom norms -->
+    <section class="slide">
+      <span class="kicker">my promises to you</span>
+      <h2>Classroom norms</h2>
+      <ul>
+        <li>I will <strong>always</strong> have learning as my priority.</li>
+        <li>I will <strong>never</strong> allow any student to keep you from learning.</li>
+        <li>I will <strong>always</strong> have your best interest in mind — and never allow
+            you to do anything that isn't.</li>
+        <li>I will <strong>always</strong> treat you with respect.</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 29 · Consequences -->
+    <section class="slide">
+      <span class="kicker">if expectations slip</span>
+      <h2>Consequences</h2>
+      <p>If you're not meeting the rules and expectations, these are used in order:</p>
+      <ol class="steps">
+        <li>Warning &amp; Free Autograph</li>
+        <li>Exclusive Teacher Interview</li>
+        <li>Remote Reflection</li>
+        <li>Dean's Referral</li>
+      </ol>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 30 · Severe consequences -->
+    <section class="slide">
+      <span class="kicker">automatic referral</span>
+      <h2>Severe consequences</h2>
+      <p>These situations result in an <strong>automatic Dean's Referral</strong>:</p>
+      <ul>
+        <li>Walking out of class</li>
+        <li>Bullying</li>
+        <li>Aggression toward a teacher or student</li>
+        <li>Making the learning environment unsafe</li>
+      </ul>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+    <!-- 31 · Closing -->
+    <section class="slide closing-slide">
+      <span class="kicker">you've got this</span>
+      <h1>Now you know how to survive</h1>
+      <p>Finish your guided notes, keep them in your notebook, and refer back whenever you
+         need them. Welcome to chemistry — let's have a great year.</p>
+      <div class="slide-footer"><span>Unit 0 · Procedures</span><span>chemlessons.xyz</span></div>
+    </section>
+
+  </div>
+
+  <div class="counter" aria-live="polite">1 / 31</div>
+  <div class="nav-hint">→ / click / swipe to advance</div>
+
+  <script>
+    (function () {
+      const slides = [...document.querySelectorAll(".slide")];
+      const progress = document.querySelector(".progress");
+      const counter = document.querySelector(".counter");
+      const hint = document.querySelector(".nav-hint");
+      let current = 0;
+
+      function show(index) {
+        index = Math.max(0, Math.min(index, slides.length - 1));
+        slides.forEach((s, i) => {
+          s.classList.toggle("active", i === index);
+          s.classList.toggle("prev", i < index);
+        });
+        current = index;
+        progress.style.width = ((index + 1) / slides.length) * 100 + "%";
+        counter.textContent = (index + 1) + " / " + slides.length;
+        history.replaceState(null, "", "#" + (index + 1));
+      }
+
+      function next() { show(current + 1); fadeHint(); }
+      function prev() { show(current - 1); fadeHint(); }
+
+      let hintFaded = false;
+      function fadeHint() {
+        if (!hintFaded) { hint.classList.add("faded"); hintFaded = true; }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); next(); }
+        else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+        else if (e.key === "Home") { e.preventDefault(); show(0); }
+        else if (e.key === "End") { e.preventDefault(); show(slides.length - 1); }
+        else if (e.key.toLowerCase() === "f") {
+          document.fullscreenElement
+            ? document.exitFullscreen()
+            : document.documentElement.requestFullscreen().catch(() => {});
+        }
+      });
+
+      // click: right half = next, left half = previous (links still work)
+      document.addEventListener("click", (e) => {
+        if (e.target.closest("a")) return;
+        e.clientX > window.innerWidth / 2 ? next() : prev();
+      });
+
+      // swipe
+      let touchX = null;
+      document.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+      document.addEventListener("touchend", (e) => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 45) dx < 0 ? next() : prev();
+        touchX = null;
+      }, { passive: true });
+
+      // deep link: #3 opens slide 3
+      const fromHash = parseInt(location.hash.slice(1), 10);
+      show(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+    })();
+  </script>
+</body>
+</html>
