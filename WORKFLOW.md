@@ -112,17 +112,24 @@ they don't leak.
 
 ---
 
-## Ground-truth files (`.build/`, gitignored)
+## Ground-truth files (`.build/`)
 
-| File | What it is |
-| --- | --- |
-| `mapping-master.csv` | RowID (C####/M####/R####) → original Drive file ids + metadata. |
-| `drive-inventory.jsonl` | Raw Drive crawl (2,172 items). |
-| `copy-manifest.csv` | Every copy made: old id → new id, name, destination, audience. |
-| `versions.json` | Resource version state (see above). |
-| `build_mapping.py` | Documents the original mapping heuristics. |
+| File | In git? | What it is |
+| --- | --- | --- |
+| `versions.json` | **committed** | Resource version state (see above). |
+| `copy-manifest.csv` | **committed** | Every copy made: old id → new id, name, destination, audience. |
+| `mapping-master.csv` | local only | RowID (C####/M####/R####) → original Drive file ids + metadata. |
+| `drive-inventory.jsonl` | local only | Raw Drive crawl (2,172 items). |
+| `build_mapping.py` | local only | Documents the original mapping heuristics (one-time crawl tooling). |
 
-These are local ground truth — keep them; they're not in git.
+**Why the split:** this repo is **public** (required for free GitHub Pages), and
+`drive-inventory.jsonl` + `mapping-master.csv` enumerate the entire *private*
+district Drive — every file title, id, and folder path, plus the account email —
+so they stay out of git. `versions.json` and `copy-manifest.csv` contain only
+already-public site data (the same file ids that live in `js/data.js`, public
+resource titles, versions, dates), and they're the state you'd least want to lose,
+so they're **committed** as durable backup. The `.gitignore` uses
+`.build/*` + `!` exceptions to draw that line.
 
 ---
 
