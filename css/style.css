@@ -1383,6 +1383,24 @@ a.card-title:hover { color: var(--blue); }
 }
 .game-note:hover { background: var(--blue-100); color: var(--blue-dark); }
 
+/* A unit with more than one companion game: a lead-in label + a pill per game */
+.game-notes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.2rem 0 1.1rem;
+}
+.game-notes .game-note { margin: 0; }
+.game-notes-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
 .no-results {
   text-align: center;
   color: var(--gray);
