@@ -20,7 +20,12 @@
    - title:   display name
    - kind:    notebook | slides | assignment | lab | activity | assessment
    - type:    gdoc | gsheet | gslides | gform | pdf | html | video | link
-   - url:     link to the resource. Leave "" to show it as "In progress".
+   - url:     link to the resource. Leave "" to show it as "In progress"
+              (dimmed, unlinked) — for content that isn't finished yet.
+   - ready:   (optional) true marks a resource that has no public url because
+              it's gated, not unfinished (e.g. assessments shared only with
+              verified educators). Renders an "Available" badge instead of
+              the dimmed "In progress" one.
    - copyUrl: (optional) a Google "force copy" link. For any Google file,
               replace /edit... at the end of the URL with /copy to make one.
    - deckUrl: (optional) path to an on-site HTML slide deck version of this
@@ -105,21 +110,21 @@ const TRACKS = [
           { title: "The Left and Right Sides", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1jTkfmbhRR2o6Q05aIooJQBjPlFzwQvA_cYCoMC2Q4oA/preview", copyUrl: "https://docs.google.com/document/d/1jTkfmbhRR2o6Q05aIooJQBjPlFzwQvA_cYCoMC2Q4oA/copy", version: 1, updated: "2026-07-14" },
           { title: "The Top Ten", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1_hjCGQSLWf9pClsklMM7OtKCPHhDkseFc-h_2IaDtps/preview", copyUrl: "https://docs.google.com/document/d/1_hjCGQSLWf9pClsklMM7OtKCPHhDkseFc-h_2IaDtps/copy", version: 1, updated: "2026-07-14" },
           { title: "Thinking Maps", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1pNMVHngdY5t8LEfZT6a-_zH7NCbgAmkBTq6HjM0_Hhc/preview", copyUrl: "https://docs.google.com/document/d/1pNMVHngdY5t8LEfZT6a-_zH7NCbgAmkBTq6HjM0_Hhc/copy", version: 1, updated: "2026-07-14" },
-          { title: "Science Self-Concept", kind: "assignment", type: "pdf", url: "https://drive.google.com/file/d/1vKgaHJfIrq1NQwF84iMlWiKD2kUC8Szu/view", copyUrl: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/copy", version: 1, updated: "2026-07-14" },
+          { title: "Science Self-Concept", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/preview", copyUrl: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/copy", version: 1, updated: "2026-07-14" },
           { title: "This or That Icebreaker", kind: "activity", type: "gslides", url: "https://docs.google.com/presentation/d/1w7lHxL_-aQyuLGfjOrQHdqlw7m0z3rBV52TnxO1OvZU/preview", copyUrl: "https://docs.google.com/presentation/d/1w7lHxL_-aQyuLGfjOrQHdqlw7m0z3rBV52TnxO1OvZU/copy", version: 1, updated: "2026-07-14" },
           { title: "Student Selfie", kind: "assignment", type: "pdf", url: "https://drive.google.com/file/d/1hRKgWA_wSiAjXgOq4sxIqFsif0lC8giq/view", copyUrl: "https://docs.google.com/spreadsheets/d/1En-y3kBg_j2n_g_5F0eXLUbuVKYgs_Gh1L5aQYgDmxY/copy", version: 1, updated: "2026-07-14" },
           { title: "Reactants and Products Organizer", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1_iKfluWJhsNsgmgJfvnXwUsW1gem939CPY4A7HLyalg/preview", copyUrl: "https://docs.google.com/document/d/1_iKfluWJhsNsgmgJfvnXwUsW1gem939CPY4A7HLyalg/copy", version: 1, updated: "2026-07-14" },
           { title: "Survival Procedures Review", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1cfqLIRu2cR9pv0YkGZTm7uk7J0lepMgU07QUJmgy4GY/preview", copyUrl: "https://docs.google.com/document/d/1cfqLIRu2cR9pv0YkGZTm7uk7J0lepMgU07QUJmgy4GY/copy", version: 1, updated: "2026-07-14" },
           { title: "Demonstration CER Organizer", kind: "lab", type: "gdoc", url: "https://docs.google.com/document/d/1_bRzcO7uafzrSPZK51iq4sZjId7t_43qiP2HCIZZ7t8/preview", copyUrl: "https://docs.google.com/document/d/1_bRzcO7uafzrSPZK51iq4sZjId7t_43qiP2HCIZZ7t8/copy", version: 1, updated: "2026-07-14" },
-          { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
+          { title: "Lab Safety Contract", kind: "lab", type: "gdoc", url: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/preview", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", deckUrl: "slides/unit-0-procedures/", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
           { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
-          { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "" },
-          { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "" },
+          { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "", ready: true },
+          { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "", ready: true },
         ],
       },
       {
@@ -383,21 +388,21 @@ const TRACKS = [
           { title: "The Left and Right Sides", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1jTkfmbhRR2o6Q05aIooJQBjPlFzwQvA_cYCoMC2Q4oA/preview", copyUrl: "https://docs.google.com/document/d/1jTkfmbhRR2o6Q05aIooJQBjPlFzwQvA_cYCoMC2Q4oA/copy", version: 1, updated: "2026-07-14" },
           { title: "The Top Ten", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1_hjCGQSLWf9pClsklMM7OtKCPHhDkseFc-h_2IaDtps/preview", copyUrl: "https://docs.google.com/document/d/1_hjCGQSLWf9pClsklMM7OtKCPHhDkseFc-h_2IaDtps/copy", version: 1, updated: "2026-07-14" },
           { title: "Thinking Maps", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1pNMVHngdY5t8LEfZT6a-_zH7NCbgAmkBTq6HjM0_Hhc/preview", copyUrl: "https://docs.google.com/document/d/1pNMVHngdY5t8LEfZT6a-_zH7NCbgAmkBTq6HjM0_Hhc/copy", version: 1, updated: "2026-07-14" },
-          { title: "Science Self-Concept", kind: "assignment", type: "pdf", url: "https://drive.google.com/file/d/1vKgaHJfIrq1NQwF84iMlWiKD2kUC8Szu/view", copyUrl: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/copy", version: 1, updated: "2026-07-14" },
+          { title: "Science Self-Concept", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/preview", copyUrl: "https://docs.google.com/document/d/1V9P5xvP7xt1SDq6noi2G-snSWzf74ySRI8kUbF1r9Jo/copy", version: 1, updated: "2026-07-14" },
           { title: "This or That Icebreaker", kind: "activity", type: "gslides", url: "https://docs.google.com/presentation/d/1w7lHxL_-aQyuLGfjOrQHdqlw7m0z3rBV52TnxO1OvZU/preview", copyUrl: "https://docs.google.com/presentation/d/1w7lHxL_-aQyuLGfjOrQHdqlw7m0z3rBV52TnxO1OvZU/copy", version: 1, updated: "2026-07-14" },
           { title: "Student Selfie", kind: "assignment", type: "pdf", url: "https://drive.google.com/file/d/1hRKgWA_wSiAjXgOq4sxIqFsif0lC8giq/view", copyUrl: "https://docs.google.com/spreadsheets/d/1En-y3kBg_j2n_g_5F0eXLUbuVKYgs_Gh1L5aQYgDmxY/copy", version: 1, updated: "2026-07-14" },
           { title: "Reactants and Products Organizer", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1_iKfluWJhsNsgmgJfvnXwUsW1gem939CPY4A7HLyalg/preview", copyUrl: "https://docs.google.com/document/d/1_iKfluWJhsNsgmgJfvnXwUsW1gem939CPY4A7HLyalg/copy", version: 1, updated: "2026-07-14" },
           { title: "Survival Procedures Review", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1cfqLIRu2cR9pv0YkGZTm7uk7J0lepMgU07QUJmgy4GY/preview", copyUrl: "https://docs.google.com/document/d/1cfqLIRu2cR9pv0YkGZTm7uk7J0lepMgU07QUJmgy4GY/copy", version: 1, updated: "2026-07-14" },
           { title: "Demonstration CER Organizer", kind: "lab", type: "gdoc", url: "https://docs.google.com/document/d/1_bRzcO7uafzrSPZK51iq4sZjId7t_43qiP2HCIZZ7t8/preview", copyUrl: "https://docs.google.com/document/d/1_bRzcO7uafzrSPZK51iq4sZjId7t_43qiP2HCIZZ7t8/copy", version: 1, updated: "2026-07-14" },
-          { title: "Lab Safety Contract", kind: "lab", type: "pdf", url: "https://drive.google.com/file/d/1FfS5Nh12PTzJ7pVjPBzM0CxfBWMbM9Gt/view", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
+          { title: "Lab Safety Contract", kind: "lab", type: "gdoc", url: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/preview", copyUrl: "https://docs.google.com/document/d/17IHDeXTpZfYcDV5AG6rhb3EYJ8I6ceqoVc165FeKMQE/copy", version: 1, updated: "2026-07-14" },
           { title: "Student BINGO", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/preview", copyUrl: "https://docs.google.com/document/d/1DaJ9k9DCuTjJDUBdYWjNdz92kJldGE5GLFystNOvCSE/copy", version: 1, updated: "2026-07-14" },
           { title: "Inquiry Cube Activity", kind: "activity", type: "gdoc", url: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/preview", copyUrl: "https://docs.google.com/document/d/1riV6geXoST17Wzf4OGSU2Tg3A80GFC0FgrD4HNs6jNQ/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures & Expectations Slides", kind: "slides", type: "gslides", url: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/preview", copyUrl: "https://docs.google.com/presentation/d/1NGLs6qMZhj4-CKlrjUSbYLzUXcMpp2l1eh2V-TPP2Vw/copy", deckUrl: "slides/unit-0-procedures/", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "notebook", type: "gdoc", url: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/preview", copyUrl: "https://docs.google.com/document/d/1T4SJ2TwnobjrSL3Fzz8lE8KvI8tZHNXvlWpph-RKrSk/copy", version: 1, updated: "2026-07-14" },
           { title: "Procedures and Expectations Notes", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/preview", copyUrl: "https://docs.google.com/document/d/1706Tphnvslqi8gNRypXmyEtDDKdpWxjwQWpodMamvZI/copy", version: 1, updated: "2026-07-14" },
           { title: "Parent Guardian Survey", kind: "assignment", type: "gdoc", url: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/preview", copyUrl: "https://docs.google.com/document/d/1j9C9TAoG-vZIfmgeJnXXJn2k_v6qlXhoRUxo2RbFISE/copy", version: 1, updated: "2026-07-14" },
-          { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "" },
-          { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "" },
+          { title: "PSA Assessment Handout", kind: "assessment", type: "gdoc", url: "", ready: true },
+          { title: "PSA Video Assessment Rubric", kind: "assessment", type: "gdoc", url: "", ready: true },
         ],
       },
       {

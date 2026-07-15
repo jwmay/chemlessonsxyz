@@ -40,13 +40,16 @@
 
   function resourceHTML(res) {
     const type = RESOURCE_TYPES[res.type] || RESOURCE_TYPES.link;
-    const soon = !res.url;
-    const previewId = !soon && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
-    const title = soon
-      ? `<span>${res.title}</span>`
-      : `<a href="${res.url}" target="_blank" rel="noopener"${previewId ? ` data-preview="${previewId}"` : ""}>${res.title}</a>`;
+    const ready = !res.url && res.ready; // finished, but gated (no public link)
+    const soon = !res.url && !res.ready; // genuinely still in progress
+    const previewId = res.url && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
+    const title = res.url
+      ? `<a href="${res.url}" target="_blank" rel="noopener"${previewId ? ` data-preview="${previewId}"` : ""}>${res.title}</a>`
+      : `<span>${res.title}</span>`;
     const badge = soon
       ? `<span class="soon-badge">In progress</span>`
+      : ready
+      ? `<span class="ready-badge">Available</span>`
       : `<span class="type-badge" style="background:${type.color}">${type.label}</span>`;
     const copy = res.copyUrl
       ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
@@ -67,20 +70,23 @@
   // active, so table view never requests a thumbnail.
   function resourceCardHTML(res) {
     const type = RESOURCE_TYPES[res.type] || RESOURCE_TYPES.link;
-    const soon = !res.url;
-    const previewId = !soon && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
-    const gated = soon && res.kind === "assessment";
+    const ready = !res.url && res.ready; // finished, but gated (no public link)
+    const soon = !res.url && !res.ready; // genuinely still in progress
+    const previewId = res.url && PREVIEWABLE.has(res.type) ? driveId(res.url) : "";
+    const gated = !res.url && res.kind === "assessment"; // educator-gated (ready or in progress)
     const inner = previewId
       ? `<img class="card-thumb-img" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="https://drive.google.com/thumbnail?id=${previewId}&sz=w600">`
       : `<span class="card-thumb-icon">${iconHTML(gated ? "fa-solid fa-lock" : type.icon, gated ? "🔒" : type.fb)}</span>`;
-    const thumb = soon
-      ? `<span class="card-thumb is-empty">${inner}</span>`
-      : `<a class="card-thumb${previewId ? "" : " is-empty"}" href="${res.url}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${inner}</a>`;
-    const title = soon
-      ? `<span class="card-title">${res.title}</span>`
-      : `<a class="card-title" href="${res.url}" target="_blank" rel="noopener">${res.title}</a>`;
+    const thumb = res.url
+      ? `<a class="card-thumb${previewId ? "" : " is-empty"}" href="${res.url}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${inner}</a>`
+      : `<span class="card-thumb is-empty">${inner}</span>`;
+    const title = res.url
+      ? `<a class="card-title" href="${res.url}" target="_blank" rel="noopener">${res.title}</a>`
+      : `<span class="card-title">${res.title}</span>`;
     const badge = soon
       ? `<span class="soon-badge">In progress</span>`
+      : ready
+      ? `<span class="ready-badge">Available</span>`
       : `<span class="type-badge" style="background:${type.color}">${type.label}</span>`;
     const copy = res.copyUrl
       ? `<a class="copy-link" href="${res.copyUrl}" target="_blank" rel="noopener">${iconHTML("fa-solid fa-copy", "📋")} Make a copy</a>`
