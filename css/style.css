@@ -16,6 +16,8 @@
   --orange-dark: #b97a2e;
   --orange-050: #fdf5ec;
   --orange-100: #f9e7d0;
+  --green-dark: #146a35;
+  --green-050: #eef7f0;
   --gray: #5f6b7a;
   --gray-light: #96a0ad;
   --line: #e3e9f1;
@@ -1330,6 +1332,20 @@ a.card-title:hover { color: var(--blue); }
   border-radius: 999px;
   color: var(--gray);
   background: var(--blue-100);
+}
+
+/* "Available" — a finished resource with no public link because it's gated
+   (e.g. assessments shared only with verified educators). Green, positive
+   sibling of .soon-badge so a done-but-locked item never reads as unfinished. */
+.ready-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: var(--green-050);
 }
 
 .lock-note {
