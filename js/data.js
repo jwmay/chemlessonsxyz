@@ -34,10 +34,13 @@
               deck without visiting the Slide Decks page.
 
    UNIT FIELD (optional)
-   - game:    companion Chem Cash game for the unit, e.g.
+   - game:    companion Chem Cash game(s) for the unit. Either one game:
               game: { title: "Lewis Lab", slug: "lewis-lab" }
-              Renders a "Companion game" chip in the unit's curriculum card,
-              linking to SITE.chemCashUrl + "#" + slug.
+              or an array when a unit has several (e.g. bonding games):
+              game: [ { title: "Lewis Lab", slug: "lewis-lab" },
+                      { title: "Lattice",   slug: "lattice" } ]
+              Renders a "Companion game" chip per game in the unit's
+              curriculum card, each linking to SITE.chemCashUrl + "#" + slug.
    ========================================================================== */
 
 const SITE = {
@@ -232,7 +235,10 @@ const TRACKS = [
         description:
           "Why atoms stick together: ionic, covalent, and metallic bonding, and how bond type shapes properties.",
         topics: ["Why atoms bond", "Ionic bonding", "Covalent bonding", "Metallic bonding", "Properties & bond type", "Naming (intro)"],
-        game: { title: "Elementman Bond", slug: "elementman-bond" },
+        game: [
+          { title: "Elementman Bond", slug: "elementman-bond" },
+          { title: "Lattice", slug: "lattice" },
+        ],
         resources: [
           { title: "Chemical Bonding Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "Ionic vs. Covalent Slides", kind: "slides", type: "gslides", url: "" },
@@ -472,7 +478,10 @@ const TRACKS = [
         description:
           "From Lewis structures through VSEPR geometry, polarity, and intermolecular forces — structure predicts properties.",
         topics: ["Ionic & covalent bonding", "Lewis structures", "VSEPR geometry", "Polarity", "Intermolecular forces"],
-        game: { title: "Lewis Lab", slug: "lewis-lab" },
+        game: [
+          { title: "Lewis Lab", slug: "lewis-lab" },
+          { title: "Lattice", slug: "lattice" },
+        ],
         resources: [
           { title: "Bonding & Structure Notebook Pages", kind: "notebook", type: "pdf", url: "" },
           { title: "VSEPR & Polarity Slides", kind: "slides", type: "gslides", url: "" },

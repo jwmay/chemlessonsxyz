@@ -133,14 +133,24 @@
 
     const trackChip = `<span class="track-chip">${track.short}</span>`;
 
-    // Optional companion-game chip (unit.game in data.js) → Chem Cash deep link
-    // (the #slug fragment scrolls to the games section with that game's tab active)
-    const gameChip = unit.game
-      ? `<a class="game-note" href="${SITE.chemCashUrl}#${unit.game.slug}"
-            target="_blank" rel="noopener noreferrer">
-            ${iconHTML("fa-duotone fa-solid fa-gamepad", "🎮")} Companion game on Chem Cash: ${unit.game.title}
-         </a>`
-      : "";
+    // Optional companion-game chip(s) (unit.game in data.js) → Chem Cash deep
+    // link(s). unit.game may be a single {title,slug} or an array of them (a
+    // unit can have several games — e.g. the bonding units). The #slug fragment
+    // scrolls to the games section with that game's tab active.
+    const games = Array.isArray(unit.game) ? unit.game : unit.game ? [unit.game] : [];
+    const gamepad = iconHTML("fa-duotone fa-solid fa-gamepad", "🎮");
+    const gameLink = (g, label) =>
+      `<a class="game-note" href="${SITE.chemCashUrl}#${g.slug}"
+          target="_blank" rel="noopener noreferrer">${label}</a>`;
+    let gameChip = "";
+    if (games.length === 1) {
+      gameChip = gameLink(games[0], `${gamepad} Companion game on Chem Cash: ${games[0].title}`);
+    } else if (games.length > 1) {
+      gameChip = `<div class="game-notes">
+            <span class="game-notes-label">${gamepad} Companion games on Chem Cash:</span>
+            ${games.map((g) => gameLink(g, g.title)).join("")}
+         </div>`;
+    }
 
     return `
       <article class="unit" id="${unit.id}" data-track="${track.id}"
