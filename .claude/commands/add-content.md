@@ -21,7 +21,14 @@ file ids; `.build/copy-manifest.csv` records old id → new id for every copy.
    `.build/mapping-master.csv` by RowID — **the sheet's edits win**. Skip only
    rows with Include = "no". Rows marked "REVIEW" ARE still copied, but into
    staging and never published (see step 5). Report a reconciliation summary
-   (published / staged-for-review / skipped counts) BEFORE copying anything.
+   (published / direct-published / staged-for-review / skipped counts) BEFORE
+   copying anything.
+   - **Direct-publish rows** (`Flags` = `direct-publish`, `Published id` column
+     set) were uploaded straight into the final site tree by the import add-on
+     (`scripts/mapping-import.gs`). They have NEW RowIDs that are NOT in
+     `mapping-master.csv` — that's expected; use the ids already in the sheet
+     (`Published id` / `View file id` / `Copy file id`), don't try to join the
+     master. Do NOT re-copy them (step 5); just wire + version them (steps 7–8).
 4. Ensure the folder tree exists (reuse the ids in memory; create a
    `Unit NN — <name>` folder where needed):
    `chemlessons.xyz — Public/<Course>/…` and
@@ -36,7 +43,9 @@ file ids; `.build/copy-manifest.csv` records old id → new id for every copy.
      the final report.
 5. Copy each file with `copy_file`, choosing its name + destination by status
    (keep the LG/U numbering as the unit number; copy BOTH formats of a Doc+PDF
-   pair):
+   pair). **Skip direct-publish rows entirely** — their file already lives in the
+   final folder with the final id; instead append a manifest row with Role
+   `direct` and Old id = New id = `Published id`, then move on to step 7:
    - **Approved** (Include = "yes"): name `U## · <Kind> · <Title>`, into the
      course's `Unit NN — …` folder (educators-only material into the Educators
      Only tree). Audience = public / educators.
@@ -65,7 +74,9 @@ file ids; `.build/copy-manifest.csv` records old id → new id for every copy.
 8. Seed versions for the new resources: fetch the new copy-source ids'
    `modifiedTime`s (`get_file_metadata`, `excludeContentSnippets: true`) → write
    `observed.json` → `node scripts/versions.mjs seed <observed.json>` (bakes v1
-   and the version/updated fields into `js/data.js`).
+   and the version/updated fields into `js/data.js`). Direct-publish rows use
+   their `Published id` as the copy-source id, so include those the same way —
+   the published file IS the living master the version chip tracks.
 9. Verify: `node --check js/data.js`, `npm run check`, then serve locally and
    screenshot both course views (headless Chrome clamps below 500px CSS unless
    you use `--force-device-scale-factor`). Report anything unresolved as a list.

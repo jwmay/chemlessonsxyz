@@ -1,0 +1,266 @@
+<!--
+  chemlessons.xyz — Mapping-sheet resource importer dialog.
+  Paired with mapping-import.gs. Add this in the Apps Script editor as an HTML
+  file named `mapping-import`. Inline CSS/JS is fine here — this is a sandboxed
+  Apps Script dialog, not a site page (the repo's no-inline-style rule is for the
+  validated site HTML only).
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<style>
+  :root { --line:#dadce0; --ink:#202124; --muted:#5f6368; --accent:#3f6ea6; --bg:#fff; --chip:#f1f3f4; --err:#c5221f; --ok:#188038; }
+  * { box-sizing: border-box; }
+  body { font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); margin: 0; padding: 14px; background: var(--bg); }
+  h2 { font-size: 15px; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 12px; }
+  fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 0 0 12px; }
+  legend { font-weight: 600; color: var(--muted); padding: 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  label { display: block; font-size: 11px; color: var(--muted); margin: 0 0 2px; }
+  input, select { font: inherit; padding: 5px 7px; border: 1px solid var(--line); border-radius: 6px; width: 100%; background: #fff; color: var(--ink); }
+  input[type=number] { width: 90px; }
+  input[type=checkbox] { width: auto; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+  .row > div { flex: 1 1 130px; min-width: 110px; }
+  .drop { border: 2px dashed var(--line); border-radius: 8px; padding: 18px; text-align: center; color: var(--muted); cursor: pointer; }
+  .drop.hot { border-color: var(--accent); background: #f5f9ff; color: var(--accent); }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 10px 0 0; }
+  .card .fname { font-weight: 600; word-break: break-all; }
+  .card .meta { color: var(--muted); font-size: 11px; margin: 2px 0 8px; }
+  .card .preview { color: var(--accent); font-size: 12px; margin-top: 6px; word-break: break-all; }
+  .card .status { font-size: 12px; margin-top: 6px; }
+  .card.done { border-color: var(--ok); }
+  .card.fail { border-color: var(--err); }
+  .status.ok { color: var(--ok); }
+  .status.err { color: var(--err); }
+  .conv { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink); }
+  .x { float: right; border: none; background: none; color: var(--muted); cursor: pointer; font-size: 15px; line-height: 1; }
+  .bar { position: sticky; bottom: 0; background: var(--bg); padding-top: 10px; display: flex; gap: 10px; align-items: center; }
+  button.primary { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+  button.primary:disabled { opacity: .5; cursor: default; }
+  button.ghost { background: none; border: 1px solid var(--line); border-radius: 6px; padding: 8px 14px; font: inherit; cursor: pointer; }
+  .count { color: var(--muted); margin-left: auto; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+  <h2>Import resources <span id="course" style="color:var(--accent)"></span></h2>
+  <p class="sub">Files upload straight into the site Unit folder and each gets a fully-filled mapping row.</p>
+
+  <fieldset>
+    <legend>Batch defaults</legend>
+    <div class="row">
+      <div style="flex:0 0 90px"><label>Unit #</label><input type="number" id="unit" min="0" step="1" placeholder="3"></div>
+      <div style="flex:2 1 200px"><label>Drive unit name</label><input type="text" id="unitName" placeholder="Bonding"></div>
+      <div style="flex:0 0 70px"><label>Seq</label><input type="number" id="seq" min="1" step="1" value="1"></div>
+      <div style="flex:0 0 120px"><label>Audience</label><select id="audience"></select></div>
+      <div style="flex:0 0 110px"><label>Include</label><select id="include"></select></div>
+    </div>
+  </fieldset>
+
+  <div class="drop" id="drop">Drop files here, or <u>click to choose</u>
+    <input type="file" id="picker" multiple class="hide">
+  </div>
+
+  <div id="cards"></div>
+
+  <div class="bar">
+    <button class="primary" id="go" disabled>Import</button>
+    <button class="ghost" id="close">Close</button>
+    <span class="count" id="count"></span>
+  </div>
+
+<script>
+  var CFG = null;
+  var files = [];       // { file, id, els } — one per chosen file
+  var seq = 0;
+
+  var OFFICE = { doc:'Doc', docx:'Doc', ppt:'Slides', pptx:'Slides', xls:'Sheet', xlsx:'Sheet' };
+  var KIND_HINTS = [
+    [/quiz|test|exam|answer key|\bkey\b|assessment/i, 'assessment'],
+    [/\blab\b/i, 'lab'],
+    [/slide|deck|presentation/i, 'slides'],
+    [/note|notebook|\binb\b/i, 'notebook'],
+    [/activity|station|phet|simulation/i, 'activity'],
+  ];
+
+  function run(fn, a, b) {
+    return new Promise(function (res, rej) {
+      google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](a, b);
+    });
+  }
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === 'class') e.className = attrs[k]; else if (k === 'text') e.textContent = attrs[k]; else e.setAttribute(k, attrs[k]); });
+    (kids || []).forEach(function (k) { e.appendChild(k); });
+    return e;
+  }
+  function opts(sel, vals, selected) {
+    vals.forEach(function (v) { var o = el('option'); o.value = v; o.textContent = v; if (v === selected) o.selected = true; sel.appendChild(o); });
+  }
+  function extOf(n) { var m = /\.([^.]+)$/.exec(n || ''); return m ? m[1].toLowerCase() : ''; }
+  function baseName(n) { return String(n || '').replace(/\.[^.]+$/, ''); }
+  function guessKind(n) { for (var i = 0; i < KIND_HINTS.length; i++) if (KIND_HINTS[i][0].test(n)) return KIND_HINTS[i][1]; return 'assignment'; }
+  function pad2(n) { return ('0' + (parseInt(n, 10) || 0)).slice(-2); }
+  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+  // ---- init ----
+  run('getConfig').then(function (cfg) {
+    CFG = cfg;
+    document.getElementById('course').textContent = '→ ' + cfg.course + ' Chemistry';
+    opts(document.getElementById('audience'), cfg.audiences, 'public');
+    opts(document.getElementById('include'), cfg.includes, 'yes');
+  }).catch(function (e) { alert('Could not load config: ' + e.message); });
+
+  // ---- file picking ----
+  var drop = document.getElementById('drop'), picker = document.getElementById('picker');
+  drop.addEventListener('click', function () { picker.click(); });
+  drop.addEventListener('dragover', function (e) { e.preventDefault(); drop.classList.add('hot'); });
+  drop.addEventListener('dragleave', function () { drop.classList.remove('hot'); });
+  drop.addEventListener('drop', function (e) { e.preventDefault(); drop.classList.remove('hot'); addFiles(e.dataTransfer.files); });
+  picker.addEventListener('change', function () { addFiles(picker.files); picker.value = ''; });
+
+  function addFiles(fileList) {
+    Array.prototype.forEach.call(fileList, function (f) { addCard(f); });
+    refreshCount();
+  }
+
+  function addCard(file) {
+    var id = 'f' + (++seq);
+    var ex = extOf(file.name);
+    var convertible = OFFICE.hasOwnProperty(ex);
+    var isPdf = ex === 'pdf';
+
+    var title = el('input', { type: 'text', value: baseName(file.name) });
+    var kind = el('select'); opts(kind, CFG.kinds, guessKind(file.name));
+    var audience = el('select'); opts(audience, ['— batch —'].concat(CFG.audiences), '— batch —');
+    var include = el('select'); opts(include, ['— batch —'].concat(CFG.includes), '— batch —');
+    var honors = el('input', { type: 'text', placeholder: 'Honors variant (opt.)' });
+
+    var convBox = el('input', { type: 'checkbox' }); convBox.checked = convertible; // default: convert Office files
+    var convWrap;
+    if (convertible) convWrap = el('label', { class: 'conv' }, [convBox, document.createTextNode(' Convert to Google ' + OFFICE[ex])]);
+    else convWrap = el('span', { class: 'meta', text: isPdf ? 'Kept as PDF' : (ex ? 'Kept as .' + ex : 'Kept as-is') });
+
+    var preview = el('div', { class: 'preview' });
+    var status = el('div', { class: 'status' });
+    var xbtn = el('button', { class: 'x', title: 'Remove', text: '×' });
+
+    var card = el('div', { class: 'card' }, [
+      xbtn,
+      el('div', { class: 'fname', text: file.name }),
+      el('div', { class: 'meta', text: (file.size / 1024 < 1024 ? (file.size / 1024).toFixed(0) + ' KB' : (file.size / 1048576).toFixed(1) + ' MB') }),
+      el('div', { class: 'row' }, [
+        el('div', { style: 'flex:2 1 200px' }, [el('label', { text: 'Title' }), title]),
+        el('div', { style: 'flex:1 1 120px' }, [el('label', { text: 'Kind' }), kind]),
+      ]),
+      el('div', { class: 'row' }, [
+        el('div', { style: 'flex:1 1 110px' }, [el('label', { text: 'Audience' }), audience]),
+        el('div', { style: 'flex:1 1 110px' }, [el('label', { text: 'Include' }), include]),
+        el('div', { style: 'flex:2 1 160px' }, [el('label', { text: ' ' }), honors]),
+      ]),
+      convWrap,
+      preview, status,
+    ]);
+
+    var entry = { file: file, id: id, done: false, els: { card: card, title: title, kind: kind, audience: audience, include: include, honors: honors, conv: convBox, convertible: convertible, preview: preview, status: status } };
+
+    function repaint() {
+      var u = document.getElementById('unit').value;
+      entry.els.preview.textContent = u === '' ? '' : ('→ U' + pad2(u) + ' · ' + cap(kind.value) + ' · ' + (title.value || '(title)'));
+    }
+    [title, kind].forEach(function (n) { n.addEventListener('input', repaint); });
+    document.getElementById('unit').addEventListener('input', repaint);
+    repaint();
+
+    xbtn.addEventListener('click', function () {
+      files = files.filter(function (e) { return e !== entry; });
+      card.remove(); refreshCount();
+    });
+
+    files.push(entry);
+    document.getElementById('cards').appendChild(card);
+  }
+
+  function refreshCount() {
+    var pending = files.filter(function (e) { return !e.done; }).length;
+    document.getElementById('count').textContent = files.length ? (pending + ' to import') : '';
+    document.getElementById('go').disabled = pending === 0;
+  }
+
+  // ---- import ----
+  function readBase64(file) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res(String(r.result).split(',')[1]); };
+      r.onerror = function () { rej(r.error || new Error('read failed')); };
+      r.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('go').addEventListener('click', function () {
+    var unit = document.getElementById('unit').value.trim();
+    var unitName = document.getElementById('unitName').value.trim();
+    if (unit === '' || unitName === '') { alert('Set the Unit # and Drive unit name first.'); return; }
+    var batch = { unit: unit, unitName: unitName, seq: document.getElementById('seq').value.trim() };
+    var batchAud = document.getElementById('audience').value;
+    var batchInc = document.getElementById('include').value;
+
+    var pending = files.filter(function (e) { return !e.done; });
+    setBusy(true);
+
+    // Sequential: one google.script.run per file (isolates failures + keeps payloads small).
+    var MAX = 40 * 1024 * 1024;
+    pending.reduce(function (chain, entry) {
+      return chain.then(function () {
+        entry.els.card.classList.remove('fail');
+        if (entry.file.size > MAX) {
+          entry.els.card.classList.add('fail');
+          entry.els.status.className = 'status err';
+          entry.els.status.textContent = '✗ ' + (entry.file.size / 1048576).toFixed(0) + ' MB — over the 40 MB dialog limit; add this one to Drive by hand.';
+          return;
+        }
+        entry.els.status.textContent = 'Uploading…'; entry.els.status.className = 'status';
+        return readBase64(entry.file).then(function (b64) {
+          var f = {
+            name: entry.file.name, mimeType: entry.file.type, bytesBase64: b64,
+            title: entry.els.title.value.trim(), kind: entry.els.kind.value,
+            audience: entry.els.audience.value === '— batch —' ? batchAud : entry.els.audience.value,
+            include: entry.els.include.value === '— batch —' ? batchInc : entry.els.include.value,
+            convert: entry.els.convertible && entry.els.conv.checked,
+            honors: entry.els.honors.value.trim(),
+          };
+          return run('importOne', batch, f);
+        }).then(function (r) {
+          if (r && r.ok) {
+            entry.done = true;
+            entry.els.card.classList.add('done');
+            entry.els.status.className = 'status ok';
+            entry.els.status.textContent = '✓ ' + r.rowId + ' · ' + r.format + ' · ' + r.folder;
+            entry.els.preview.innerHTML = '';
+            entry.els.preview.appendChild(el('a', { href: r.url, target: '_blank', text: r.name }));
+          } else {
+            entry.els.card.classList.add('fail');
+            entry.els.status.className = 'status err';
+            entry.els.status.textContent = '✗ ' + ((r && r.error) || 'unknown error');
+          }
+        }).catch(function (e) {
+          entry.els.card.classList.add('fail');
+          entry.els.status.className = 'status err';
+          entry.els.status.textContent = '✗ ' + (e && e.message ? e.message : e);
+        });
+      });
+    }, Promise.resolve()).then(function () {
+      setBusy(false); refreshCount();
+    });
+  });
+
+  function setBusy(b) {
+    document.getElementById('go').disabled = b;
+    document.getElementById('go').textContent = b ? 'Importing…' : 'Import';
+  }
+  document.getElementById('close').addEventListener('click', function () { google.script.host.close(); });
+</script>
+</body>
+</html>

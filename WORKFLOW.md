@@ -109,6 +109,25 @@ Use **`/add-content <course> <unit #>`**. It follows the flow used for Unit 0:
 6. Seed versions (`scripts/versions.mjs seed`) so new resources start at v1.
 7. `npm run check`, screenshot, then `/ship`.
 
+### Adding NEW resources via the import add-on (skips the copy step)
+
+For brand-new resources you're authoring (not cataloguing the legacy district
+Drive), use the **"chemlessons ▸ Import resources…"** menu on the mapping sheet
+(Apps Script: `scripts/mapping-import.gs` + `mapping-import.html`; installed once
+per sheet, run as the site account). You drop in files, set each one's column
+values, and it uploads them **straight into the final
+`chemlessons.xyz — Public/<Course>/Unit NN — …` folder** (or the Educators Only
+tree), names them `U## · Kind · Title`, shares public ones, and appends a fully
+populated row — marked `direct-publish` in `Flags`, with the final id in a new
+`Published id` column.
+
+Because the file is born final, there's **no copy step**: `/add-content` detects
+`direct-publish` rows, skips copying, records a `direct` manifest row, and just
+wires them into `js/data.js` + seeds v1. The published file is the living master,
+so later edits flow through `/check-updates` exactly like any other resource.
+(Convert-to-Google is a per-file toggle in the dialog; that path needs the
+Advanced **Drive API** service enabled in the script editor.)
+
 **Shared units (e.g. Unit 0 Classroom Procedures)** belong to both courses but
 their files exist **once**. In `js/data.js`, both course entries reuse the *same*
 file ids — never a second copy. In Drive, the files live under the first course;
